@@ -3,7 +3,7 @@
 \docType{data}
 \name{cbPalette15}
 \alias{cbPalette15}
-\title{Fifteen-colour colourblind palette}
+\title{Fifteen-colour colourblind-friendly palette}
 \format{An object of class \code{character} of length 15.}
 \source{
 http://mkweb.bcgsc.ca/biovis2012/color-blindness-palette.png
@@ -12,11 +12,14 @@ http://mkweb.bcgsc.ca/biovis2012/color-blindness-palette.png
 cbPalette15
 }
 \description{
-A fifteen-colour [Brewer palette](http://mkweb.bcgsc.ca/brewer/) compatible with colourblindness.
+A fifteen-colour \href{http://mkweb.bcgsc.ca/brewer/}{Brewer palette} compatible with colourblindness.
 }
 \details{
 Note that colour 4 is difficult to distinguish from colour 13 in individuals with tritanopia.
 Likewise, colour 7 is difficult to distinguish from colour 3.
-You may wish to use `cbPalette13 <- cbPalette15[-c(4, 7)]`.
+You may wish to use \code{cbPalette13 <- cbPalette15[-c(4, 7)]}.
+}
+\seealso{
+\link{cbPalette8}
 }
 \keyword{datasets}

@@ -3,10 +3,14 @@
 \name{TernaryPlot}
 \alias{TernaryPlot}
 \alias{HorizontalGrid}
-\title{Ternary Plot}
+\title{Create a ternary plot}
 \usage{
-TernaryPlot(alab = NULL, blab = NULL, clab = NULL, lab.cex = 1,
-  lab.font = 2, isometric = TRUE, padding = 0.04, col = NA,
+TernaryPlot(atip = NULL, btip = NULL, ctip = NULL, alab = NULL,
+  blab = NULL, clab = NULL, lab.offset = 0.16, point = "up",
+  xlim = NULL, ylim = NULL, lab.cex = 1, lab.font = 0,
+  tip.cex = lab.cex, tip.font = 2, isometric = TRUE, atip.rotate = NULL,
+  btip.rotate = NULL, ctip.rotate = NULL, atip.pos = NULL,
+  btip.pos = NULL, ctip.pos = NULL, padding = 0.08, col = NA,
   grid.lines = 10, grid.col = "grey", grid.lty = "dotted",
   grid.lwd = par("lwd"), axis.lty = "solid", axis.labels = TRUE,
   axis.cex = 0.8, axis.font = par("font"), axis.tick = TRUE,
@@ -14,23 +18,37 @@ TernaryPlot(alab = NULL, blab = NULL, clab = NULL, lab.cex = 1,
   ticks.col = grid.col, ...)
 
 HorizontalGrid(grid.lines = 10, grid.col = "grey", grid.lty = "dotted",
-  grid.lwd = par("lwd"))
+  grid.lwd = par("lwd"), direction = getOption("ternDirection"))
 }
 \arguments{
-\item{alab, blab, clab}{Character specifying the title for the topmost,
-bottommost and leftmost corners respectively.}
+\item{atip, btip, ctip}{Character specifying text to title corners, proceeding clockwise
+from the corner specified in \code{point} (default: top).}
 
-\item{lab.cex}{Numeric specifying character expansion for axis titles.}
+\item{alab, blab, clab}{Character specifying text with which to label the corresponding
+sides of the triangle.  Left or right-pointing arrows are produced by
+typing \code{\\U2190} or \code{\\U2192}.}
 
-\item{lab.font}{Numeric specifying font (roman, bold, italic, bold-italic) for axis titles.}
+\item{lab.offset}{Numeric specifying distance between midpoint of axis label and the axis.
+Increase \code{padding} if labels are being clipped.}
 
-\item{isometric}{Logical specifying whether to enforce an equilateral 
+\item{point}{Character specifying the orientation of the ternary plot: should the
+triangle point up, left, right or down?}
+
+\item{xlim, ylim}{Numeric vectors of length 2 specifying the minimum and maximum
+\emph{x} and \emph{y} limits of the plotted area, to which \code{padding}
+will be added.}
+
+\item{lab.cex, tip.cex}{Numeric specifying character expansion for axis titles.}
+
+\item{lab.font, tip.font}{Numeric specifying font (roman, bold, italic, bold-italic) for axis titles.}
+
+\item{isometric}{Logical specifying whether to enforce an equilateral
 shape for the ternary plot.}
 
 \item{padding}{Numeric specifying size of internal margin of the plot; increase
 if axis labels are being clipped.}
 
-\item{col}{The colour for filling the plot; see \link[graphics]{polygon}.}
+\item{col}{The colour for filling the plot; see \code{[graphics:polygon]}.}
 
 \item{grid.lines}{The number of grid lines to plot.}
 
@@ -42,10 +60,10 @@ if axis labels are being clipped.}
 
 \item{axis.lty}{Line type for both the axis line and tick marks}
 
-\item{axis.labels}{This can either be a logical value specifying whether 
+\item{axis.labels}{This can either be a logical value specifying whether
 (numerical) annotations are to be made at the tickmarks,
- or a character or expression vector of labels to be
- placed at the tickpoints.}
+or a character or expression vector of labels to be
+placed at the tickpoints.}
 
 \item{axis.cex}{Numeric specifying character expansion for axis labels.}
 
@@ -53,29 +71,54 @@ if axis labels are being clipped.}
 
 \item{axis.tick}{Logical specifying whether to mark the axes with tick marks.}
 
-\item{axis.lwd, ticks.lwd}{Line width for the axis line and tick marks. 
+\item{axis.lwd, ticks.lwd}{Line width for the axis line and tick marks.
 Zero or negative values will suppress the line or ticks.}
 
-\item{axis.col, ticks.col}{Colours for the axis line and tick marks respectively. 
-\code{axis.col = NULL} means to use \code{par("fg")}, possibly specified 
+\item{axis.col, ticks.col}{Colours for the axis line and tick marks respectively.
+\code{axis.col = NULL} means to use \code{par('fg')}, possibly specified
 inline, and \code{ticks.col = NULL} means to use whatever colour
 \code{axis.col} resolved to.}
 
-\item{\dots}{Additional parameters to \code{\link[graphics]{plot}}.}
+\item{\dots}{Additional parameters to \code{[graphics:plot]}.}
+
+\item{direction}{(optional) Integer specifying the direction that the current ternary plot 
+should point: 1, up; 2, right; 3, down; 4, left.}
+
+\item{alab.rotate, blab.rotate, clab.rotate}{Integer specifying number of
+degrees to rotate label of rightmost apex.}
+
+\item{alab.pos, blab.pos, clab.pos}{Integer specifying positioning of labels,
+iff corresponding \code{xlab.rotate} parameter is set.}
 }
 \description{
-Create a blank ternary plot, rotated so that its left edge is vertical.
+Create and style a blank ternary plot.
+}
+\details{
+The plot will be generated using the standard graphics plot functions, on which
+additional elements can be added using cartesian coordinates, perhaps using
+functions such as \url{arrows}, \link{legend} or \link{text}.
 }
 \section{Functions}{
 \itemize{
-\item \code{HorizontalGrid}: Add horizontal lines to the ternary plot
+\item \code{HorizontalGrid}: Add \code{grid.lines} horizontal lines to the ternary plot
 }}
 
 \examples{
 {
-TernaryPlot(alab="Top", blab="Bottom", clab="Right", border="red", col=rgb(0.8, 0.8, 0.8))
+TernaryPlot(atip="Top", btip="Bottom", ctip="Right", axis.col="red", col=rgb(0.8, 0.8, 0.8))
+HorizontalGrid(grid.lines=2, grid.col='blue', grid.lty=1) # the second line corresponds to
+                                              # the base of the triangle, and is not drawn
 }
 
+}
+\seealso{
+{
+\itemize{
+\item \link{AddToTernary}: Add elements to a ternary plot
+\item \link{TernaryCoords}: Convert ternary coordinates to Cartesian (\emph{x} and \emph{y}) coordinates
+\item \link{TernaryXRange}, \link{TernaryYRange}: What are the \emph{x} and \emph{y} limits of the plotted region?
+}
+}
 }
 \author{
 Martin R. Smith

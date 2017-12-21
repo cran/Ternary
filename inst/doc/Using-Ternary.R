@@ -11,9 +11,16 @@ library('Ternary')
 ## ----Create blank plot---------------------------------------------------
 TernaryPlot()
 
+## ----Create simple plot, fig.width=7, fig.height=7-----------------------
+par(mfrow=c(2, 2), mar=rep(0.5, 4))
+for (dir in c('up', 'right', 'down', 'le')) {
+  TernaryPlot(point=dir, atip='A', btip='B', ctip='C', alab='Aness', blab='Bness', clab='Cness')
+  TernaryText(list(A=c(10, 01, 01), B=c(01, 10, 01), C=c(01, 01, 10)), col=cbPalette8[4], font=2)
+}
+
 ## ----Do plotting---------------------------------------------------------
 par(mfrow=c(1, 2), mar=rep(0.3, 4))
-TernaryPlot(' Redder', ' Greener', 'Bluer', lab.cex=0.8,
+TernaryPlot(alab="Redder\u2192", blab="Greener \u2192", clab="Bluer \u2192", point='right', lab.cex=0.8,
             grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
             axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
             padding=0.08)
@@ -37,8 +44,11 @@ legend('bottomright',
        legend=c('Red', 'Orange', 'Yellow', 'Green'), 
        cex=0.8, bty='n')
 
-TernaryPlot('Steam', 'Ice', 'water', grid.lines=5)
-#HorizontalGrid()
+###
+# Next plot:
+###
+TernaryPlot('Steam', 'Ice', 'Water', grid.lines=5, point='West')
+HorizontalGrid()
 middle_triangle <- matrix(c(
   30, 40, 30,
   30, 30, 40,
@@ -49,5 +59,12 @@ TernaryLines(list(c(0, 100, 0), middle_triangle[1, ]), col='grey')
 TernaryLines(list(c(0, 0, 100), middle_triangle[2, ]), col='grey')
 TernaryLines(list(c(100, 0, 0), middle_triangle[3, ]), col='grey')
 
-
+## ----Cartesian-----------------------------------------------------------
+TernaryPlot(point='right')
+cat("X range in this orientation:", TernaryXRange())
+cat("Y range in this orientation:", TernaryYRange())
+arrows(x0=0.5, y0=0.4, x1=sqrt(3)/2, y1=0.4, length=0.1, col=cbPalette8[2])
+text(x=mean(c(0.5, sqrt(3)/2)), y=0.4, "Increasing X", pos=3, col=cbPalette8[2])
+text(x=0.5, y=0, "(0.5, 0)", col=cbPalette8[3])
+text(x=0.8, y=-0.5, "(0.8, -0.5)", col=cbPalette8[3])
 

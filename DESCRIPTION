@@ -1,7 +1,7 @@
 Package: Ternary
-Version: 0.1.1
-Date: 2017-11-23
-Title: Plot Ternary Diagrams
+Version: 1.0.0
+Date: 2017-12-21
+Title: A Package to Generate Ternary Plots
 Description: Plots ternary diagrams using the standard graphics functions.  
   An alternative to 'ggtern', which uses the 'ggplot2' family of plotting functions.
 URL: https://github.com/ms609/Ternary
@@ -18,8 +18,8 @@ LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2017-11-23 18:16:11 UTC; ms609
+Packaged: 2017-12-21 15:04:07 UTC; ms609
 Author: Martin R. Smith [aut, cre, cph] (0000-0001-5660-1727)
 Maintainer: Martin R. Smith <martins@gmail.com>
 Repository: CRAN
-Date/Publication: 2017-11-23 18:41:58 UTC
+Date/Publication: 2017-12-21 15:19:52 UTC

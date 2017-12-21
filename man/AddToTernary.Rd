@@ -6,7 +6,8 @@
 \alias{TernaryText}
 \alias{TernaryLines}
 \alias{TernaryPolygon}
-\title{Add to Ternary Plot}
+\alias{JoinTheDots}
+\title{Add elements to ternary plot}
 \usage{
 AddToTernary(PlottingFunction, coordinates, ...)
 
@@ -17,6 +18,8 @@ TernaryText(coordinates, ...)
 TernaryLines(coordinates, ...)
 
 TernaryPolygon(coordinates, ...)
+
+JoinTheDots(coordinates, ...)
 }
 \arguments{
 \item{PlottingFunction}{Function to add data to a plot; perhaps one of
@@ -42,6 +45,8 @@ Plot points onto a ternary diagram created with \code{\link{TernaryPlot}}.
 \item \code{TernaryLines}: Add points
 
 \item \code{TernaryPolygon}: Add points
+
+\item \code{JoinTheDots}: Add points, joined by lines
 }}
 
 \examples{

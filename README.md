@@ -6,8 +6,10 @@
 [![Project Status: Active.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
 # Ternary
-'Ternary' is an R package that allows the creation of ternary plots using the familiar functions of the default 'graphics'
+'Ternary' is an R package that allows the creation of ternary plots (a.k.a. ternary graphs / simplex plots / Gibbs triangles / de Finetti diagrams) using the familiar functions of the default 'graphics'
 package.
+
+Usage instructions can be [viewed here](https://ms609.github.io/Ternary/inst/doc/Using-Ternary.html).
 
 Please let me know of any feature requests or bugs by [opening an 
 issue on GitHub](https://github.com/ms609/Ternary/issues).

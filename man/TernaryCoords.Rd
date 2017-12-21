@@ -2,30 +2,40 @@
 % Please edit documentation in R/TernaryPlot.R
 \name{TernaryCoords}
 \alias{TernaryCoords}
-\title{XY to Ternary}
+\title{Convert ternary coordinates to Cartesian space}
 \usage{
-TernaryCoords(abc, b_coord = NULL, c_coord = NULL)
+TernaryCoords(abc, b_coord = NULL, c_coord = NULL,
+  direction = getOption("ternDirection"))
 }
 \arguments{
-\item{abc}{A vector of length three giving the position on a ternary plot.
-\code{c(100, 0, 0)} will plot in the top corner; \code{c(0, 100, 0)} 
-will plot in the bottom corner; \code{c(0, 0, 1)} will plot in
-the right-hand corner.
+\item{abc}{A vector of length three giving the position on a ternary plot that points
+in the direction specified by \code{direction} (1 = up, 2 = right, 3 = down, 4 = left).
+\code{c(100, 0, 0)} will plot in the \code{direction}-most corner; \code{c(0, 100, 0)}
+will plot in the corner clockwise of \code{direction}; \code{c(0, 0, 100)} will plot in
+the corner anti-clockwise of \code{direction}.
 Alternatively, the a coordinate can be specified as the first parameter,
 in which case the b and c coordinates must be specified via \code{b_coord}
-and \code{c_coord}}
+and \code{c_coord}.}
 
 \item{b_coord}{The b coordinate, if \code{abc} is a single number.}
 
 \item{c_coord}{The c coordinate, if \code{abc} is a single number.}
+
+\item{direction}{(optional) Integer specifying the direction that the current ternary plot 
+should point: 1, up; 2, right; 3, down; 4, left.}
 }
 \value{
 A vector of length two that converts the coordinates given in \code{abc}
-        into cartesian (x, y) coordinates, to be overlaid on a ternary plot
-        with corners at (0, -1/2), (0, 1/2), (sin(pi/3), 0)
+into Cartesian (\emph{x}, \emph{y}) coordinates corresponding to the plot created by
+the last call of \code{\link{TernaryPlot}}.
 }
 \description{
-XY to Ternary
+Converts coordinates of a point in ternary space, in the format (\emph{a}, \emph{b}, \emph{c}), to
+\emph{x} and \emph{y} coordinates of Cartesian space, which can be sent to standard functions
+in the graphics package.
+}
+\seealso{
+\link{TernaryPlot}
 }
 \author{
 Martin R. Smith
