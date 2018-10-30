@@ -8,19 +8,21 @@
 TernaryPlot(atip = NULL, btip = NULL, ctip = NULL, alab = NULL,
   blab = NULL, clab = NULL, lab.offset = 0.16, point = "up",
   xlim = NULL, ylim = NULL, lab.cex = 1, lab.font = 0,
-  tip.cex = lab.cex, tip.font = 2, isometric = TRUE, atip.rotate = NULL,
-  btip.rotate = NULL, ctip.rotate = NULL, atip.pos = NULL,
-  btip.pos = NULL, ctip.pos = NULL, padding = 0.08, col = NA,
-  grid.lines = 10, grid.col = "darkgrey", grid.lty = "solid",
-  grid.lwd = par("lwd"), grid.minor.lines = 4,
+  tip.cex = lab.cex, tip.font = 2, isometric = TRUE,
+  atip.rotate = NULL, btip.rotate = NULL, ctip.rotate = NULL,
+  atip.pos = NULL, btip.pos = NULL, ctip.pos = NULL,
+  padding = 0.08, col = NA, grid.lines = 10, grid.col = "darkgrey",
+  grid.lty = "solid", grid.lwd = par("lwd"), grid.minor.lines = 4,
   grid.minor.col = "lightgrey", grid.minor.lty = "solid",
-  grid.minor.lwd = par("lwd"), axis.lty = "solid", axis.labels = TRUE,
-  axis.cex = 0.8, axis.font = par("font"), axis.tick = TRUE,
-  axis.lwd = 1, ticks.lwd = axis.lwd, axis.col = "black",
-  ticks.col = grid.col, ...)
+  grid.minor.lwd = par("lwd"), axis.lty = "solid",
+  axis.labels = TRUE, axis.cex = 0.8, axis.font = par("font"),
+  axis.tick = TRUE, axis.lwd = 1, ticks.lwd = axis.lwd,
+  ticks.length = 0.025, axis.col = "black", ticks.col = grid.col,
+  axis.labels.col = axis.col, ...)
 
-HorizontalGrid(grid.lines = 10, grid.col = "grey", grid.lty = "dotted",
-  grid.lwd = par("lwd"), direction = getOption("ternDirection"))
+HorizontalGrid(grid.lines = 10, grid.col = "grey",
+  grid.lty = "dotted", grid.lwd = par("lwd"),
+  direction = getOption("ternDirection"))
 }
 \arguments{
 \item{atip, btip, ctip}{Character specifying text to title corners, proceeding clockwise
@@ -28,38 +30,39 @@ from the corner specified in \code{point} (default: top).}
 
 \item{alab, blab, clab}{Character specifying text with which to label the corresponding
 sides of the triangle.  Left or right-pointing arrows are produced by
-typing \code{\\U2190} or \code{\\U2192}.}
+typing \code{\\U2190} or \code{\\U2192}, or using \code{expression('value' \%->\% '')}.}
 
 \item{lab.offset}{Numeric specifying distance between midpoint of axis label and the axis.
 Increase \code{padding} if labels are being clipped.}
 
-\item{point}{Character specifying the orientation of the ternary plot: should the
-triangle point up, left, right or down?}
+\item{point}{Character specifying the orientation of the ternary plot: should
+the triangle point up, left, right or down?}
 
 \item{xlim, ylim}{Numeric vectors of length 2 specifying the minimum and maximum
-\emph{x} and \emph{y} limits of the plotted area, to which \code{padding}
-will be added. Allows cropping to magnified region of the plot.
-(See vignette for diagram.)}
+\emph{x} and \emph{y} limits of the plotted area, to which \code{padding} will be added.
+Allows cropping to magnified region of the plot. (See vignette for diagram.)}
 
 \item{lab.cex, tip.cex}{Numeric specifying character expansion for axis titles.}
 
 \item{lab.font, tip.font}{Numeric specifying font (roman, bold, italic, bold-italic) for axis titles.}
 
-\item{isometric}{Logical specifying whether to enforce an equilateral
-shape for the ternary plot.}
+\item{isometric}{Logical specifying whether to enforce an equilateral shape
+for the ternary plot.  Ignored if \code{xlim} or \code{ylim} are set.}
 
 \item{padding}{Numeric specifying size of internal margin of the plot; increase
 if axis labels are being clipped.}
 
 \item{col}{The colour for filling the plot; see \code{[graphics:polygon]}.}
 
-\item{grid.lines}{Integer speficying the number of grid lines to plot.}
+\item{grid.lines}{Integer specifying the number of grid lines to plot.}
 
 \item{grid.col, grid.minor.col}{The colour to draw the grid lines.}
 
-\item{grid.lty, grid.minor.lty}{Character or (integer) numeric; line type of the grid lines.}
+\item{grid.lty, grid.minor.lty}{Character or (integer) numeric; line type of
+the grid lines.}
 
-\item{grid.lwd, grid.minor.lwd}{Non-negative numeric giving line width of the grid lines.}
+\item{grid.lwd, grid.minor.lwd}{Non-negative numeric giving line width of the
+grid lines.}
 
 \item{grid.minor.lines}{Integer specifying the number of minor (unlabelled)
 grid lines to plot between each major pair.}
@@ -67,9 +70,8 @@ grid lines to plot between each major pair.}
 \item{axis.lty}{Line type for both the axis line and tick marks}
 
 \item{axis.labels}{This can either be a logical value specifying whether
-(numerical) annotations are to be made at the tickmarks,
-or a character or expression vector of labels to be
-placed at the tickpoints.}
+(numerical) annotations are to be made at the tickmarks, or a character or
+expression vector of labels to be placed at the tickpoints.}
 
 \item{axis.cex}{Numeric specifying character expansion for axis labels.}
 
@@ -80,14 +82,19 @@ placed at the tickpoints.}
 \item{axis.lwd, ticks.lwd}{Line width for the axis line and tick marks.
 Zero or negative values will suppress the line or ticks.}
 
-\item{axis.col, ticks.col}{Colours for the axis line and tick marks respectively.
+\item{ticks.length}{Numeric specifying distance that ticks should extend
+beyond the plot margin.  Also affects position of axis labels, which are
+plotted at the end of each tick.}
+
+\item{axis.col, ticks.col, axis.labels.col}{Colours for the axis line, tick
+marks and labels, respectively.
 \code{axis.col = NULL} means to use \code{par('fg')}, possibly specified
 inline, and \code{ticks.col = NULL} means to use whatever colour
 \code{axis.col} resolved to.}
 
 \item{\dots}{Additional parameters to \code{[graphics:plot]}.}
 
-\item{direction}{(optional) Integer specifying the direction that the current ternary plot 
+\item{direction}{(optional) Integer specifying the direction that the current ternary plot
 should point: 1, up; 2, right; 3, down; 4, left.}
 
 \item{alab.rotate, blab.rotate, clab.rotate}{Integer specifying number of
