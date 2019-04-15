@@ -72,6 +72,73 @@ text(x=mean(c(0.5, sqrt(3)/2)), y=0.4, "Increasing X", pos=3, col=cbPalette8[2])
 text(x=0.5, y=0, "(0.5, 0)", col=cbPalette8[3])
 text(x=0.8, y=-0.5, "(0.8, -0.5)", col=cbPalette8[3])
 
+## ----contours------------------------------------------------------------
+par(mar=rep(0.2, 4))
+TernaryPlot(alab = 'a', blab = 'b', clab = 'c')
+
+FunctionToContour <- function (a, b, c) {
+  a - c + (4 * a * b) + (27 * a * b * c)
+}
+
+values <- TernaryPointValues(FunctionToContour, resolution=24L)
+ColourTernary(values)
+TernaryContour(FunctionToContour, resolution=36L)
+
+
+## ----density-contours----------------------------------------------------
+par(mar=rep(0.2, 4))
+TernaryPlot()
+
+nPoints <- 4000L
+coordinates <- cbind(abs(rnorm(nPoints, 2, 3)),
+                     abs(rnorm(nPoints, 1, 1.5)),
+                     abs(rnorm(nPoints, 1, 0.5)))
+
+ColourTernary(TernaryDensity(coordinates, resolution=10L))
+TernaryPoints(coordinates, col='red', pch='.')
+TernaryDensityContour(coordinates, resolution=30L)
+
+## ----low-resolution-density-contours, echo=FALSE-------------------------
+coordinates <- list(middle = c(1, 1, 1),
+                 top = c(3, 0, 0),
+                 belowTop = c(2, 1, 1),
+                 leftSideSolid = c(9, 2, 9),
+                 leftSideSolid2 = c(9.5, 2, 8.5),
+                 right3way = c(1, 2, 0),
+                 rightEdge = c(2.5, 0.5, 0),
+                 leftBorder = c(1, 1, 4),
+                 topBorder = c(2, 1, 3),
+                 rightBorder = c(1, 2, 3)
+               )
+par(mfrow=c(2, 2), mar=rep(0.2, 4))
+TernaryPlot(grid.lines=3, axis.labels=1:3, point='up')
+values <- TernaryDensity(coordinates, resolution=3L)
+ColourTernary(values)
+TernaryPoints(coordinates, col='red')
+text(values[1, ], values[2, ], paste(values[3, ], '/ 6'), cex=0.8)
+
+TernaryPlot(grid.lines=3, axis.labels=1:3, point='right')
+values <- TernaryDensity(coordinates, resolution=3L)
+ColourTernary(values)
+TernaryPoints(coordinates, col='red')
+text(values[1, ], values[2, ], paste(values[3, ], '/ 6'), cex=0.8)
+
+TernaryPlot(grid.lines=3, axis.labels=1:3, point='down')
+values <- TernaryDensity(coordinates, resolution=3L)
+ColourTernary(values)
+TernaryPoints(coordinates, col='red')
+text(values[1, ], values[2, ], paste(values[3, ], '/ 6'), cex=0.8)
+
+TernaryPlot(grid.lines=3, axis.labels=1:3, point='left')
+values <- TernaryDensity(coordinates, resolution=3L)
+ColourTernary(values)
+TernaryPoints(coordinates, col='red')
+text(values[1, ], values[2, ], paste(values[3, ], '/ 6'), cex=0.8)
+
+TernaryDensityContour(t(vapply(coordinates, I, double(3L))), resolution=24L, tolerance=-0.02, col='orange')
+
+
+
 ## ----find-corners--------------------------------------------------------
 my_corners <- list(c(22, 66, 12), c(22, 72, 6), c(15, 80, 5), c(12, 76, 12))
 lapply(my_corners, TernaryCoords, direction=1)

@@ -25,40 +25,55 @@ HorizontalGrid(grid.lines = 10, grid.col = "grey",
   direction = getOption("ternDirection"))
 }
 \arguments{
-\item{atip, btip, ctip}{Character specifying text to title corners, proceeding clockwise
-from the corner specified in \code{point} (default: top).}
+\item{atip, btip, ctip}{Character string specifying text to title corners,
+proceeding clockwise from the corner specified in \code{point} (default: top).}
 
-\item{alab, blab, clab}{Character specifying text with which to label the corresponding
-sides of the triangle.  Left or right-pointing arrows are produced by
+\item{alab, blab, clab}{Character string specifying text with which to label
+the corresponding sides of the triangle.
+Left or right-pointing arrows are produced by
 typing \code{\\U2190} or \code{\\U2192}, or using \code{expression('value' \%->\% '')}.}
 
 \item{lab.offset}{Numeric specifying distance between midpoint of axis label and the axis.
 Increase \code{padding} if labels are being clipped.}
 
-\item{point}{Character specifying the orientation of the ternary plot: should
-the triangle point up, left, right or down?}
+\item{point}{Character string specifying the orientation of the ternary plot:
+should the triangle point \code{"up"}, \code{"right"}, \code{"down"} or \code{"left"}?
+The integers 1 to 4 can be used in place of the character strings.}
 
 \item{xlim, ylim}{Numeric vectors of length 2 specifying the minimum and maximum
 \emph{x} and \emph{y} limits of the plotted area, to which \code{padding} will be added.
-Allows cropping to magnified region of the plot. (See vignette for diagram.)}
+The default is to display the complete height or width of the plot.
+Allows cropping to magnified region of the plot. (See vignette for diagram.)
+May be overwridden if \code{isometric=TRUE}; see documentation for
+\code{isometric} parameter.}
 
 \item{lab.cex, tip.cex}{Numeric specifying character expansion for axis titles.}
 
 \item{lab.font, tip.font}{Numeric specifying font (roman, bold, italic, bold-italic) for axis titles.}
 
 \item{isometric}{Logical specifying whether to enforce an equilateral shape
-for the ternary plot.  Ignored if \code{xlim} or \code{ylim} are set.}
+for the ternary plot.
+If only one of \code{xlim} and \code{ylim} is set, the other will be calculated to maintain
+an equilateral plot.
+If both \code{xlim} and \code{ylim} are set, but have different ranges, then the limit with the
+smaller range will be scaled until its range matches that of the other limit.}
+
+\item{atip.rotate, btip.rotate, ctip.rotate}{Integer specifying number of
+degrees to rotate label of rightmost apex.}
+
+\item{atip.pos, btip.pos, ctip.pos}{Integer specifying positioning of labels,
+iff the corresponding \code{xlab.rotate} parameter is set.}
 
 \item{padding}{Numeric specifying size of internal margin of the plot; increase
 if axis labels are being clipped.}
 
-\item{col}{The colour for filling the plot; see \code{[graphics:polygon]}.}
+\item{col}{The colour for filling the plot; see \code{\link[graphics]{polygon}}.}
 
 \item{grid.lines}{Integer specifying the number of grid lines to plot.}
 
 \item{grid.col, grid.minor.col}{The colour to draw the grid lines.}
 
-\item{grid.lty, grid.minor.lty}{Character or (integer) numeric; line type of
+\item{grid.lty, grid.minor.lty}{Character or integer; line type of
 the grid lines.}
 
 \item{grid.lwd, grid.minor.lwd}{Non-negative numeric giving line width of the
@@ -67,11 +82,11 @@ grid lines.}
 \item{grid.minor.lines}{Integer specifying the number of minor (unlabelled)
 grid lines to plot between each major pair.}
 
-\item{axis.lty}{Line type for both the axis line and tick marks}
+\item{axis.lty}{Line type for both the axis line and tick marks.}
 
 \item{axis.labels}{This can either be a logical value specifying whether
 (numerical) annotations are to be made at the tickmarks, or a character or
-expression vector of labels to be placed at the tickpoints.}
+expression vector of labels to be placed at the tick points.}
 
 \item{axis.cex}{Numeric specifying character expansion for axis labels.}
 
@@ -92,16 +107,10 @@ marks and labels, respectively.
 inline, and \code{ticks.col = NULL} means to use whatever colour
 \code{axis.col} resolved to.}
 
-\item{\dots}{Additional parameters to \code{[graphics:plot]}.}
+\item{\dots}{Additional parameters to \code{\link[graphics]{plot}}.}
 
 \item{direction}{(optional) Integer specifying the direction that the current ternary plot
 should point: 1, up; 2, right; 3, down; 4, left.}
-
-\item{alab.rotate, blab.rotate, clab.rotate}{Integer specifying number of
-degrees to rotate label of rightmost apex.}
-
-\item{alab.pos, blab.pos, clab.pos}{Integer specifying positioning of labels,
-iff corresponding \code{xlab.rotate} parameter is set.}
 }
 \description{
 Create and style a blank ternary plot.
@@ -136,4 +145,3 @@ HorizontalGrid(grid.lines=2, grid.col='blue', grid.lty=1) # the second line corr
 \author{
 Martin R. Smith
 }
-\keyword{internal}

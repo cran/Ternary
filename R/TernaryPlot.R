@@ -1,92 +1,3 @@
-#' Convert ternary coordinates to Cartesian space
-#' 
-#' Converts coordinates of a point in ternary space, in the format (_a_, _b_, _c_), to
-#' _x_ and _y_ coordinates of Cartesian space, which can be sent to standard functions
-#' in the graphics package.
-#' 
-#' @param abc A vector of length three giving the position on a ternary plot that points
-#'            in the direction specified by `direction` (1 = up, 2 = right, 3 = down, 4 = left).
-#'            \code{c(100, 0, 0)} will plot in the `direction`-most corner; \code{c(0, 100, 0)} 
-#'            will plot in the corner clockwise of `direction`; \code{c(0, 0, 100)} will plot in
-#'            the corner anti-clockwise of `direction`.
-#'            Alternatively, the a coordinate can be specified as the first parameter,
-#'            in which case the b and c coordinates must be specified via \code{b_coord}
-#'            and \code{c_coord}.
-#' @param b_coord The b coordinate, if \code{abc} is a single number.
-#' @param c_coord The c coordinate, if \code{abc} is a single number.
-#' @template directionParam
-#'            
-#' @return A vector of length two that converts the coordinates given in \code{abc}
-#'         into Cartesian (_x_, _y_) coordinates corresponding to the plot created by
-#'         the last call of \code{\link{TernaryPlot}}.
-#'
-#' @seealso [TernaryPlot]
-#' @author Martin R. Smith
-#' @export
-TernaryCoords <- function (abc, b_coord=NULL, c_coord=NULL, direction=getOption('ternDirection')) {
-  if (!is.null(b_coord) && !is.null(c_coord)) {
-    abc <- c(abc, b_coord, c_coord)
-  }
-  if (length(abc) != 3) stop("Parameter abc must be a vector of length three.")
-  if (mode(abc) != 'numeric') stop("Parameter abc must be numeric.")
-  if (!(direction %in% 1:4)) stop  ("Parameter direction must be 1, 2, 3 or 4")
-  
-  abc <- abc[if (direction == 1L) c(2, 3, 1) else
-             if (direction == 2L) c(3, 2, 1) else 
-             if (direction == 3L) c(3, 2, 1) else
-             if (direction == 4L) c(2, 3, 1)]
-  
-  x_deviation <- abc[3] / sum(abc)
-  if (x_deviation == 1) {
-      x <- cos(pi/6)
-      y <- 0
-  } else {
-    y_deviation <- (abc[1] - abc[2]) / sum(abc[1:2])
-    x <- x_deviation * cos(pi/6)
-    y <- y_deviation * (1 - x_deviation) / 2
-  }
-  ret <- if (direction == 1L) c(y, x) else 
-         if (direction == 2L) c(x, y) else 
-         if (direction == 3L) c(y, -x) else
-         if (direction == 4L) c(-x, y)
-  
-  # Return:
-  ret
-}
-
-#' X and Y coordinates of ternary plotting area
-#'
-#' @template directionParam
-#'
-#' @return Returns the minimum and maximum X coordinate for a ternary plot, 
-#' oriented in the specified direction.
-#' 
-#' @author Martin R. Smith
-#' @export
-TernaryXRange <- function (direction = getOption('ternDirection')) {
-  if (is.na(direction) || !(direction %in% 1:4)) stop("Invalid ternary orientation")
-  if (direction == 2L) {
-    c(0, 1) - ((1 - sqrt(0.75)) / 2) # Range should equal Y range. Centre plot.
-  } else if (direction == 4L) {
-    c(-1, 0) + ((1 - sqrt(0.75)) / 2) # Range should equal Y range. Centre plot.
-  } else {
-    c(-0.5, 0.5)
-  }
-}
-
-#' @describeIn TernaryXRange Returns the minimum and maximum Y coordinate for a ternary plot in the specified direction.
-#' @export
-TernaryYRange <- function (direction = getOption('ternDirection')) {
-  if (is.na(direction) || !(direction %in% 1:4)) stop("Invalid ternary orientation")
-  if (direction == 1L) {
-    c(0, 1) - ((1 - sqrt(0.75)) / 2) # Range should equal X range. Centre plot.
-  } else if (direction == 3L) {
-    c(-1, 0) + ((1 - sqrt(0.75)) / 2) # Range should equal X range. Centre plot.
-  } else {
-    c(-0.5, +0.5)
-  } 
-}
-
 #' Create a ternary plot
 #' 
 #' Create and style a blank ternary plot.
@@ -95,43 +6,53 @@ TernaryYRange <- function (direction = getOption('ternDirection')) {
 #' additional elements can be added using cartesian coordinates, perhaps using
 #' functions such as [arrows](arrows), [legend] or [text].
 #' 
-#' @param atip,btip,ctip Character specifying text to title corners, proceeding clockwise
-#'  from the corner specified in `point` (default: top).
-#' @param alab,blab,clab Character specifying text with which to label the corresponding 
-#'  sides of the triangle.  Left or right-pointing arrows are produced by
+#' @param atip,btip,ctip Character string specifying text to title corners, 
+#' proceeding clockwise from the corner specified in `point` (default: top).
+#' @param alab,blab,clab Character string specifying text with which to label 
+#' the corresponding sides of the triangle.  
+#' Left or right-pointing arrows are produced by
 #'  typing `\\U2190` or `\\U2192`, or using `expression('value' %->% '')`.
 #' @param lab.offset Numeric specifying distance between midpoint of axis label and the axis.
 #'  Increase `padding` if labels are being clipped.
 #'                      
-#' @param point Character specifying the orientation of the ternary plot: should
-#'  the triangle point up, left, right or down?
+#' @param point Character string specifying the orientation of the ternary plot: 
+#' should the triangle point `"up"`, `"right"`, `"down"` or `"left"`? 
+#' The integers 1 to 4 can be used in place of the character strings.
+#' 
 #' @param xlim,ylim Numeric vectors of length 2 specifying the minimum and maximum
 #'  _x_ and _y_ limits of the plotted area, to which \code{padding} will be added.
-#'  Presently overrides the setting of `isometric`.
+#'  The default is to display the complete height or width of the plot.  
 #'  Allows cropping to magnified region of the plot. (See vignette for diagram.)
+#'  May be overridden if `isometric=TRUE`; see documentation of
+#'  `isometric` parameter.
+#'  
 #' @param lab.cex,tip.cex Numeric specifying character expansion for axis titles.
 #' @param lab.font,tip.font Numeric specifying font (roman, bold, italic, bold-italic) for axis titles.
-#' @param alab.rotate,blab.rotate,clab.rotate Integer specifying number of
+#' @param atip.rotate,btip.rotate,ctip.rotate Integer specifying number of
 #'  degrees to rotate label of rightmost apex.
-#' @param alab.pos,blab.pos,clab.pos Integer specifying positioning of labels,
-#'  iff corresponding `xlab.rotate` parameter is set.
+#' @param atip.pos,btip.pos,ctip.pos Integer specifying positioning of labels,
+#'  iff the corresponding `xlab.rotate` parameter is set.
 #' 
 #' @param isometric Logical specifying whether to enforce an equilateral shape
-#'  for the ternary plot.  Presently ignored if `xlim` or `ylim` are set.
+#'  for the ternary plot.
+#'  If only one of `xlim` and `ylim` is set, the other will be calculated to maintain
+#'  an equilateral plot.
+#'  If both `xlim` and `ylim` are set, but have different ranges, then the limit with the
+#'  smaller range will be scaled until its range matches that of the other limit.
 #' @param padding Numeric specifying size of internal margin of the plot; increase
 #'  if axis labels are being clipped.
-#' @param col The colour for filling the plot; see \code{[graphics:polygon]}.
+#' @param col The colour for filling the plot; see \code{\link[graphics]{polygon}}.
 #' 
 #' @param grid.lines Integer specifying the number of grid lines to plot.
 #' @param grid.minor.lines Integer specifying the number of minor (unlabelled) 
 #'  grid lines to plot between each major pair.
 #' @param grid.col,grid.minor.col The colour to draw the grid lines.
-#' @param grid.lty,grid.minor.lty Character or (integer) numeric; line type of 
+#' @param grid.lty,grid.minor.lty Character or integer; line type of 
 #'  the grid lines.
 #' @param grid.lwd,grid.minor.lwd Non-negative numeric giving line width of the
 #'  grid lines.
 #' 
-#' @param axis.lty  Line type for both the axis line and tick marks
+#' @param axis.lty  Line type for both the axis line and tick marks.
 #' @param axis.labels This can either be a logical value specifying whether 
 #'  (numerical) annotations are to be made at the tickmarks, or a character or
 #'  expression vector of labels to be placed at the tick points.
@@ -150,7 +71,7 @@ TernaryYRange <- function (direction = getOption('ternDirection')) {
 #'  \code{axis.col} resolved to.
 #' 
 #' 
-#' @param \dots Additional parameters to \code{[graphics:plot]}.
+#' @param \dots Additional parameters to \code{\link[graphics]{plot}}.
 #' 
 #' @seealso {
 #'  - [AddToTernary]: Add elements to a ternary plot
@@ -190,7 +111,7 @@ TernaryPlot <- function (atip=NULL, btip=NULL, ctip=NULL,
                          axis.col='black', ticks.col=grid.col,
                          axis.labels.col=axis.col,
                          ...) {
-  direction <- 1 + (pmatch(tolower(point), c('right', 'down', 'left', 'up', 'east', 'south', 'west', 'north', 2, 3, 4, 1)) %% 4)
+  direction <- 1L + (pmatch(tolower(point), c('right', 'down', 'left', 'up', 'east', 'south', 'west', 'north', 2L, 3L, 4L, 1L)) %% 4L)
   if (is.na(direction)) {
     warning("Point must be one of up, down, left or right")
   } else {
@@ -200,10 +121,25 @@ TernaryPlot <- function (atip=NULL, btip=NULL, ctip=NULL,
   if (isometric) {
     original_par <- par(pty='s')
     on.exit(par(original_par))
+    
+    if (is.null(xlim) && !is.null(ylim)) xlim <- TernaryXRange(direction) * (ylim[2] - ylim[1])
+    xRange <- xlim[2] - xlim[1]
+    if (is.null(ylim) && !is.null(xlim)) ylim <- TernaryYRange(direction) * xRange
+    yRange <- ylim[2] - ylim[1]
+    
+    if (length(xlim) > 0 && abs(xRange - yRange) > 1e-07) {
+      if (abs(xRange) < abs(yRange)) {
+        xlim <- xlim * (yRange / xRange)
+        warning("x range < y range, but isometric = TRUE; setting xlim = c(", xlim[1], ', ', xlim[2], ")")
+      } else {
+        ylim <- ylim * (xRange / yRange)
+        warning("x range > y range, but isometric = TRUE; setting ylim = c(", ylim[1], ', ', ylim[2], ")")
+      }
+    }
   }
-  padVec <- c(-1, 1) * padding
   if (is.null(xlim)) xlim <- TernaryXRange(direction)
   if (is.null(ylim)) ylim <- TernaryYRange(direction)
+  padVec <- c(-1, 1) * padding
   
   
   plot(-999, -999, axes=FALSE, xlab='', ylab='',
@@ -355,7 +291,6 @@ TernaryPlot <- function (atip=NULL, btip=NULL, ctip=NULL,
 #' @template directionParam
 #' 
 #' @importFrom graphics par
-#' @keywords internal
 #' @export
 HorizontalGrid <- function (grid.lines = 10, grid.col='grey',
                             grid.lty='dotted', grid.lwd=par('lwd'),
@@ -393,10 +328,10 @@ HorizontalGrid <- function (grid.lines = 10, grid.col='grey',
 #'        \code{\link[graphics]{points}},
 #'        \code{\link[graphics]{lines}} or
 #'        \code{\link[graphics]{text}}.
-#' @param coordinates A list, matrix, data.frame or vector in which each
-#'                    element (or row) specifies
-#'                    the three coordinates of a point in ternary space.
-#' @param \dots Additional parameters to pass to \code{PlottingFunction}.
+#' @template coordinatesParam
+#' @param \dots Additional parameters to pass to \code{PlottingFunction}.  
+#' If using `TernaryText`, this will likely include the parameter `labels`,
+#' to specify the text to plot.
 #' 
 #' @examples {
 #'   coords <- list(
