@@ -44,7 +44,7 @@ The integers 1 to 4 can be used in place of the character strings.}
 \emph{x} and \emph{y} limits of the plotted area, to which \code{padding} will be added.
 The default is to display the complete height or width of the plot.
 Allows cropping to magnified region of the plot. (See vignette for diagram.)
-May be overwridden if \code{isometric=TRUE}; see documentation for
+May be overridden if \code{isometric=TRUE}; see documentation of
 \code{isometric} parameter.}
 
 \item{lab.cex, tip.cex}{Numeric specifying character expansion for axis titles.}
@@ -118,7 +118,8 @@ Create and style a blank ternary plot.
 \details{
 The plot will be generated using the standard graphics plot functions, on which
 additional elements can be added using cartesian coordinates, perhaps using
-functions such as \url{arrows}, \link{legend} or \link{text}.
+functions such as \code{\link[graphics]{arrows}},
+\code{\link[graphics]{legend}} or \code{\link[graphics]{text}}.
 }
 \section{Functions}{
 \itemize{

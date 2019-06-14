@@ -1,6 +1,6 @@
 Package: Ternary
-Version: 1.1.0
-Date: 2019-04-15
+Version: 1.1.1
+Date: 2019-06-14
 Title: An R Package for Creating Ternary Plots
 Description: Plots ternary diagrams using the standard graphics functions.  
   An alternative to 'ggtern', which uses the 'ggplot2' family of plotting functions.
@@ -21,9 +21,9 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2019-04-15 16:08:49 UTC; ms609
+Packaged: 2019-06-14 15:33:46 UTC; ms609
 Author: Martin R. Smith [aut, cre, cph]
     (<https://orcid.org/0000-0001-5660-1727>)
 Maintainer: Martin R. Smith <martin.smith@durham.ac.uk>
 Repository: CRAN
-Date/Publication: 2019-04-15 17:02:41 UTC
+Date/Publication: 2019-06-14 16:11:05 UTC
