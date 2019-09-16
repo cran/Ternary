@@ -14,8 +14,10 @@ TernaryPlot()
 ## ----Create simple plot, fig.width=7, fig.height=7-----------------------
 par(mfrow=c(2, 2), mar=rep(0.5, 4))
 for (dir in c('up', 'right', 'down', 'le')) {
-  TernaryPlot(point=dir, atip='A', btip='B', ctip='C', alab='Aness', blab='Bness', clab='Cness')
-  TernaryText(list(A=c(10, 01, 01), B=c(01, 10, 01), C=c(01, 01, 10)), col=cbPalette8[4], font=2)
+  TernaryPlot(point=dir, atip='A', btip='B', ctip='C',
+              alab='Aness', blab='Bness', clab='Cness')
+  TernaryText(list(A=c(10, 1, 1), B=c(1, 10, 1), C=c(1, 1, 10)),
+              col=cbPalette8[4], font=2)
 }
 
 ## ----Do plotting---------------------------------------------------------
@@ -69,7 +71,8 @@ TernaryLines(list(c(100, 0, 0), middle_triangle[3, ]), col='grey')
 TernaryArrows(c(20, 20, 60), c(30, 30, 40), length=0.2, col='darkblue')
 
 ## ----Cartesian-----------------------------------------------------------
-TernaryPlot(point='right')
+par(mar = rep(0, 4)) # Reduce margins
+TernaryPlot(point='right', clockwise = FALSE)
 cat("X range in this orientation:", TernaryXRange())
 cat("Y range in this orientation:", TernaryYRange())
 arrows(x0=0.5, y0=0.4, x1=sqrt(3)/2, y1=0.4, length=0.1, col=cbPalette8[2])

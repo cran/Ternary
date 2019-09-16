@@ -19,7 +19,11 @@ coordinates, where a + b + c = 1.
 \description{
 Cartesian coordinates to ternary point
 }
+\seealso{
+Other coordinate translation functions: \code{\link{TernaryCoords}},
+  \code{\link{TriangleCentres}}
+}
 \author{
 Martin R. Smith
 }
-\concept{Coordinate translation}
+\concept{coordinate translation functions}
