@@ -1,5 +1,5 @@
 Package: Ternary
-Version: 1.1.2
+Version: 1.1.3
 Title: Create Ternary Plots
 Description: Plots ternary diagrams using the standard graphics functions.  
   An alternative to 'ggtern', which uses the 'ggplot2' family of plotting functions.
@@ -20,9 +20,9 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 NeedsCompilation: no
-Packaged: 2019-09-16 10:03:44 UTC; ms609
+Packaged: 2019-12-04 16:07:04 UTC; ms609
 Author: Martin R. Smith [aut, cre, cph]
     (<https://orcid.org/0000-0001-5660-1727>)
 Maintainer: Martin R. Smith <martin.smith@durham.ac.uk>
 Repository: CRAN
-Date/Publication: 2019-09-16 10:30:02 UTC
+Date/Publication: 2019-12-04 17:20:03 UTC

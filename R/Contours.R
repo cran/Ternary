@@ -27,7 +27,7 @@ TernaryPointValues <- function(Func, resolution = 48L,
   triangleCentres <- TriangleCentres (resolution, direction)
   x <- triangleCentres['x', ]
   y <- triangleCentres['y', ]
-  abc <- XYToTernary(x, y)
+  abc <- XYToTernary(x, y, direction)
   
   # Return:
   rbind(x = x, y = y, z = Func(abc[1, ], abc[2, ], abc[3, ]), 
@@ -123,7 +123,7 @@ TriangleCentres <- function (resolution = 48L,
 #' @template coordinatesParam
 #' @export
 TernaryDensity <- function (coordinates, resolution = 48L, direction = getOption('ternDirection')) {
-  if (class(coordinates) == 'list') {
+  if (inherits(coordinates, 'list')) {
     scaled <- resolution * vapply(coordinates, function (coord) coord / sum(coord),
                                   double(3L))
   } else {
@@ -420,7 +420,7 @@ TernaryContour <- function (Func, resolution = 96L, direction = getOption('ternD
   }
   
   FunctionWrapper <- function(x, y) {
-    abc <- XYToTernary(x, y)
+    abc <- XYToTernary(x, y, direction)
     # TODO make more efficient by doing this intelligently rather than lazily
     ifelse(apply(abc < - 0.6 / resolution, 2, any),
            NA,
