@@ -13,17 +13,23 @@ XYToTernary(x, y, direction = getOption("ternDirection"))
 should point: 1, up; 2, right; 3, down; 4, left.}
 }
 \value{
-\code{XYToTernary} Returns the ternary point(s) corresponding to the specified \emph{x} and \emph{y}
+\code{XYToTernary()} Returns the ternary point(s) corresponding to the specified \emph{x} and \emph{y}
 coordinates, where a + b + c = 1.
 }
 \description{
-Cartesian coordinates to ternary point
+Convert cartesian (\emph{x}, \emph{y}) coordinates to a point in ternary space.
+}
+\examples{
+XYToTernary(c(0.1, 0.2), 0.5)
+
 }
 \seealso{
-Other coordinate translation functions: \code{\link{TernaryCoords}},
+Other coordinate translation functions: \code{\link{ReflectedEquivalents}},
+  \code{\link{TernaryCoords}},
   \code{\link{TriangleCentres}}
 }
 \author{
-Martin R. Smith
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{coordinate translation functions}

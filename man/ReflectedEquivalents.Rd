@@ -13,8 +13,9 @@ ReflectedEquivalents(x, y, direction = getOption("ternDirection"))
 should point: 1, up; 2, right; 3, down; 4, left.}
 }
 \value{
-A list of the \emph{x}, \emph{y} coordinates of the points produced if
-the given point is reflected across each of the edges or corners.
+\code{ReflectedEquivalents()} returns a list of the \emph{x}, \emph{y} coordinates
+of the points produced if the given point is reflected across each of the
+edges or corners.
 }
 \description{
 To avoid edge effects, it may be desirable to add the value of a point
@@ -39,3 +40,8 @@ points(ref[[2]][, 1], ref[[2]][, 2], col='green', pch=2)
 points(ref[[3]][, 1], ref[[3]][, 2], col='orange', pch=3)
 
 }
+\seealso{
+Other coordinate translation functions: \code{\link{TernaryCoords}},
+  \code{\link{TriangleCentres}}, \code{\link{XYToTernary}}
+}
+\concept{coordinate translation functions}

@@ -1,17 +1,17 @@
-## ----Load package, eval=FALSE--------------------------------------------
+## ----Load package, eval=FALSE-------------------------------------------------
 #  install.packages('Ternary')
 
-## ----Github package, eval=FALSE------------------------------------------
+## ----Github package, eval=FALSE-----------------------------------------------
 #  if (!require('devtools')) install.packages('devtools')
 #  install_github('ms609/Ternary')
 
-## ----Load----------------------------------------------------------------
+## ----Load---------------------------------------------------------------------
 library('Ternary')
 
-## ----Create blank plot---------------------------------------------------
+## ----Create blank plot--------------------------------------------------------
 TernaryPlot()
 
-## ----Create simple plot, fig.width=7, fig.height=7-----------------------
+## ----Create simple plot, fig.width=7, fig.height=7----------------------------
 par(mfrow=c(2, 2), mar=rep(0.5, 4))
 for (dir in c('up', 'right', 'down', 'le')) {
   TernaryPlot(point=dir, atip='A', btip='B', ctip='C',
@@ -20,13 +20,19 @@ for (dir in c('up', 'right', 'down', 'le')) {
               col=cbPalette8[4], font=2)
 }
 
-## ----Do plotting---------------------------------------------------------
+## ----Do plotting--------------------------------------------------------------
 par(mfrow=c(1, 2), mar=rep(0.3, 4))
 TernaryPlot(alab="Redder \u2192", blab="\u2190 Greener", clab="Bluer \u2192",
+            lab.col=c('red', 'darkgreen', 'blue'),
             point='right', lab.cex=0.8, grid.minor.lines=0,
             grid.lty='solid', col=rgb(0.9, 0.9, 0.9), grid.col='white', 
             axis.col=rgb(0.6, 0.6, 0.6), ticks.col=rgb(0.6, 0.6, 0.6),
             padding=0.08)
+# Colour the background:
+cols <- TernaryPointValues(rgb)
+ColourTernary(cols, spectrum = NULL)
+
+# Add data points
 data_points <- list(
   R = c(255, 0, 0), 
   O = c(240, 180, 52),
@@ -51,6 +57,7 @@ legend('bottomright',
                rgb(111, 222,  16, 128, NULL, 255)),
        )
 
+
 ###
 # Next plot:
 ###
@@ -70,7 +77,7 @@ TernaryLines(list(c(0, 0, 100), middle_triangle[2, ]), col='grey')
 TernaryLines(list(c(100, 0, 0), middle_triangle[3, ]), col='grey')
 TernaryArrows(c(20, 20, 60), c(30, 30, 40), length=0.2, col='darkblue')
 
-## ----Cartesian-----------------------------------------------------------
+## ----Cartesian----------------------------------------------------------------
 par(mar = rep(0, 4)) # Reduce margins
 TernaryPlot(point='right', clockwise = FALSE)
 cat("X range in this orientation:", TernaryXRange())
@@ -80,7 +87,7 @@ text(x=mean(c(0.5, sqrt(3)/2)), y=0.4, "Increasing X", pos=3, col=cbPalette8[2])
 text(x=0.5, y=0, "(0.5, 0)", col=cbPalette8[3])
 text(x=0.8, y=-0.5, "(0.8, -0.5)", col=cbPalette8[3])
 
-## ----contours------------------------------------------------------------
+## ----contours-----------------------------------------------------------------
 par(mar=rep(0.2, 4))
 TernaryPlot(alab = 'a', blab = 'b', clab = 'c')
 
@@ -93,20 +100,20 @@ ColourTernary(values)
 TernaryContour(FunctionToContour, resolution=36L)
 
 
-## ----density-contours----------------------------------------------------
-par(mar=rep(0.2, 4))
-TernaryPlot()
+## ----density-contours---------------------------------------------------------
+par(mar = rep(0.2, 4))
+TernaryPlot(axis.labels = seq(0, 10, by = 1))
 
 nPoints <- 4000L
 coordinates <- cbind(abs(rnorm(nPoints, 2, 3)),
                      abs(rnorm(nPoints, 1, 1.5)),
                      abs(rnorm(nPoints, 1, 0.5)))
 
-ColourTernary(TernaryDensity(coordinates, resolution=10L))
-TernaryPoints(coordinates, col='red', pch='.')
-TernaryDensityContour(coordinates, resolution=30L)
+ColourTernary(TernaryDensity(coordinates, resolution = 10L))
+TernaryPoints(coordinates, col = 'red', pch = '.')
+TernaryDensityContour(coordinates, resolution = 30L)
 
-## ----low-resolution-density-contours, echo=FALSE-------------------------
+## ----low-resolution-density-contours, echo=FALSE------------------------------
 coordinates <- list(middle = c(1, 1, 1),
                  top = c(3, 0, 0),
                  belowTop = c(2, 1, 1),
@@ -147,11 +154,11 @@ TernaryDensityContour(t(vapply(coordinates, I, double(3L))), resolution=24L, tol
 
 
 
-## ----find-corners--------------------------------------------------------
+## ----find-corners-------------------------------------------------------------
 my_corners <- list(c(22, 66, 12), c(22, 72, 6), c(15, 80, 5), c(12, 76, 12))
 lapply(my_corners, TernaryCoords, direction=1)
 
-## ----close-up------------------------------------------------------------
+## ----close-up-----------------------------------------------------------------
 TernaryPlot(xlim=c(0.28, 0.38), ylim=c(0.1, 0.2), padding=0.04)
 
 # Annotate grid lines at user-specified points:

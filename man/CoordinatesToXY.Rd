@@ -12,14 +12,15 @@ element (or row) specifies
 the three coordinates of a point in ternary space.}
 }
 \value{
-An array of two rows, corresponding to the X and Y coordinates of
-\code{coordinates}.
+\code{CoordinatesToXY()} returns an array of two rows, corresponding to
+the X and Y coordinates of \code{coordinates}.
 }
 \description{
 Accepts various formats of input data; extracts ternary coordinates and
 converts to X and Y coordinates.
 }
 \author{
-Martin R. Smith
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \keyword{internal}
