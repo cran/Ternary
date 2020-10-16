@@ -4,13 +4,18 @@
 \name{Ternary-package}
 \alias{Ternary}
 \alias{Ternary-package}
-\title{Ternary: Create Ternary Plots}
+\title{The 'Ternary' package allows the creation of ternary plots
+(a.k.a. ternary graphs / simplex plots / Gibbs triangles / de Finetti diagrams)
+using the familiar functions of the default 'graphics' package.}
 \description{
-Plots ternary diagrams using the standard graphics functions.  
-  An alternative to 'ggtern', which uses the 'ggplot2' family of plotting functions.
+For simple use cases, generate ternary plots using the point-and-click
+Shiny app:\preformatted{install.packages('Ternary')
+Ternary::TernaryApp()
+}
 }
 \details{
-For usage instructions, please consult the guidance article
+For greater control over your plots, use the R command line;
+for usage instructions, consult the guidance article
 \href{https://ms609.github.io/Ternary/articles/Ternary.html}{online} or by
 typing \code{vignette('Ternary', 'Ternary')} at the R console.
 }
@@ -24,7 +29,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Martin R. Smith \email{martin.smith@durham.ac.uk} (0000-0001-5660-1727) [copyright holder]
+\strong{Maintainer}: Martin R. Smith \email{martin.smith@durham.ac.uk} (\href{https://orcid.org/0000-0001-5660-1727}{ORCID}) [copyright holder]
+
+Other contributors:
+\itemize{
+  \item Lilian Sanselme [contributor]
+}
 
 }
 \keyword{internal}

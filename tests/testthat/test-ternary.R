@@ -103,7 +103,7 @@ test_that("Axes can be styled individually", {
                 grid.minor.lty = 4:6,
                 grid.minor.lwd = 1:3,
                 axis.col = cols,
-                axis.font = 1:3,
+                axis.font = 2,
                 ticks.col = cols,
                 ticks.length = 1:3 / 50,
                 tip.font = 1:3,
@@ -183,6 +183,7 @@ test_that('Vignette plots are rendered correctly', {
     TernaryPlot('Steam', 'Ice', 'Water', 
                 grid.lines=5, grid.lty='dotted',
                 grid.minor.lines=1, grid.minor.lty='dotted',
+                btip.rotate = 330, ctip.rotate = 30,
                 point='West')
     HorizontalGrid()
     middle_triangle <- matrix(c(

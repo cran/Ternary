@@ -1,18 +1,27 @@
 # Ternary
 
-[![Project Status: Inactive.](https://www.repostatus.org/badges/latest/inactive.svg)](http://www.repostatus.org/#project-statuses)
+[![Project Status: Inactive.](https://www.repostatus.org/badges/latest/inactive.svg)](https://www.repostatus.org/#project-statuses)
 [![Build Status](https://travis-ci.org/ms609/Ternary.svg?branch=master)](https://travis-ci.org/ms609/Ternary)
 [![codecov](https://codecov.io/gh/ms609/Ternary/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/Ternary)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version/Ternary)](https://cran.r-project.org/package=Ternary)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/Ternary)](https://cran.r-project.org/package=Ternary)
-[![DOI](https://zenodo.org/badge/111806977.svg)](https://zenodo.org/badge/latestdoi/111806977)
+[![DOI](https://zenodo.org/badge/111806977.svg)](https://zenodo.org/badge/latestdoi/111806977) [![Join the chat at https://gitter.im/TernaryPackage/community](https://badges.gitter.im/TernaryPackage/community.svg)](https://gitter.im/TernaryPackage/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 
 'Ternary' is an R package that allows the creation of ternary plots 
 (a.k.a. ternary graphs / simplex plots / Gibbs triangles / de Finetti diagrams) 
 using the familiar functions of the default 'graphics' package.
 
-Usage instructions can be 
+For simple use cases, generate ternary plots using the point-and-click
+Shiny app:
+
+```
+install.packages('Ternary')
+Ternary::TernaryApp()
+```
+
+For greater control over your plots, use the R command line;
+usage instructions can be 
 [viewed here](https://ms609.github.io/Ternary/articles/Ternary.html).
 
 Please let me know of any feature requests or bugs by [opening an 
