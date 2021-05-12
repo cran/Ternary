@@ -150,12 +150,14 @@ TriangleCentres <- function (resolution = 48L,
 #' @rdname TernaryPointValues
 #' @template coordinatesParam
 #' @export
-TernaryDensity <- function (coordinates, resolution = 48L, direction = getOption('ternDirection')) {
+TernaryDensity <- function (coordinates, resolution = 48L, 
+                            direction = getOption('ternDirection')) {
   if (inherits(coordinates, 'list')) {
-    scaled <- resolution * vapply(coordinates, function (coord) coord / sum(coord),
-                                  double(3L))
+    scaled <- resolution * 
+      vapply(coordinates,function (coord) coord / sum(coord), double(3L))
   } else {
-    scaled <- resolution * apply(coordinates, 1, function (coord) coord / sum(coord))
+    scaled <- resolution * 
+      apply(coordinates, 1, function (coord) coord / sum(coord))
   }
   
   whichTri <- floor(scaled)
@@ -176,7 +178,9 @@ TernaryDensity <- function (coordinates, resolution = 48L, direction = getOption
   AllEqual <- function (x, y) all(x == y)
   
   OnUpEdge <- function (abc) {
-    # Return 1 for points on edge, 2 for each point on outer edge, 0 for each other.
+    # Return 1 for points on edge, 
+    # 2 for each point on outer edge, 
+    # 0 for each other.
     onThisEdge <- apply(floorEdges, 2, AllEqual, abc)
     theseEdges <- edges[, onThisEdge, drop=FALSE]
     
@@ -396,8 +400,11 @@ TernaryTiles <- function (x, y, down, resolution, col,
 
 #' Colour a ternary plot according to the output of a function
 #' 
-#' @param values Numeric matrix specifying the values associated with each
-#' point, generated using [`TernaryPointValues`].
+#' @param values Numeric matrix, possibly created using [`TernaryPointValues()`],
+#' with four named rows: 
+#' `x`, `y`, cartesian coordinates of each triangle centre; 
+#' `z`, value associated with that coordinate;
+#' `down`, triangle direction: `0` = point upwards; `1` = point downwards.
 #' @param spectrum Vector of colours to use as a spectrum, or `NULL` to use
 #' `values['z', ]`.
 #' @template resolutionParam

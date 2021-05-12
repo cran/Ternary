@@ -1,3 +1,9 @@
+# Ternary v1.2.2
+
+- `TernaryCoords()`, alias `TernaryToXY()`, accepts matrices.
+- New vignette with interpolation example ([#46](https://github.com/ms609/Ternary/issues/46)).
+- Document point styling in vignette.
+
 # Ternary v1.2.1
 
 - Use package 'vdiffr' conditionally in tests.
@@ -14,7 +20,7 @@
 - Support user-specified colours in `ColourTernary()`.
 - More options for controlling axis colours in `TernaryPlot()`.
 - Add examples to documentation.
-- Axis.labels example in vignette.
+- axis.labels example in vignette.
 
 # Ternary v1.1.3
 - Use `inherits`, not `class` [https://developer.r-project.org/Blog/public/2019/11/09/when-you-think-class.-think-again].
