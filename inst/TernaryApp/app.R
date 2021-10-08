@@ -3,18 +3,20 @@ if (!requireNamespace('shinyjs', quietly = TRUE,
                       exclude = c('colourInput', 'updateColourInput',
                                   'colourPicker', 'runExample'))) {
   install.packages('shinyjs')
-  install.packages('colourpicker') # Must be absent, as imports shinyjs
-  library("shinyjs", exclude = c('colourInput', 'colourPicker',
-                                 'updateColourInput', 'runExample'))
+  install.packages('colourpicker') # Necessarily absent, as imports shinyjs
 }
+library("shinyjs", exclude = c('colourInput', 'colourPicker',
+                               'updateColourInput', 'runExample'))
+
 if (!requireNamespace('colourpicker', quietly = TRUE)) {
   install.packages('colourpicker')
-  library("colourpicker")
 }
+library("colourpicker")
+
 if (!requireNamespace('Ternary', quietly = TRUE)) {
   install.packages('Ternary')
-  library("Ternary")
 }
+library("Ternary")
 
 palettes <- list("#91aaa7",
                  c("#969660", "#c3dfca"),
@@ -220,14 +222,14 @@ ui <- fluidPage(title = 'Ternary plotter', theme = "Ternary.css",
       withTags(
         div(id = 'caption',
           p("For additional features, see ",
-            a(href = "https://ms609.github.io/Ternary/articles/Ternary.html", "the R package"),
-            ", or",
+            a(href = "https://ms609.github.io/Ternary/articles/Ternary.html", "the package manual,"),
+            "or",
             a(href = "https://github.com/ms609/TernaryApp/issues/new?title=Missing+feature:+",
              "request"),
             " their addition to this app."),
           p("If using figures in a publication, please cite Smith (2017). ",
-            "Ternary: An R Package for Creating Ternary Plots. ",
-            "Zenodo, doi:",
+            '"Ternary: An R Package for Creating Ternary Plots." ',
+            "Comprehensive R Archive Network, doi:",
             a(href = "https://dx.doi.org/10.5281/zenodo.1068996",
               "10.5281/zenodo.1068996")
           ),

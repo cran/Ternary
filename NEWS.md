@@ -1,3 +1,8 @@
+# Ternary v1.2.3
+
+- Fix bug in `TernaryApp()` when 'colourpicker' not previously installed.
+- Update to 'testthat' edition 3.
+
 # Ternary v1.2.2
 
 - `TernaryCoords()`, alias `TernaryToXY()`, accepts matrices.
