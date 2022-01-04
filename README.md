@@ -9,6 +9,7 @@
 
 'Ternary' is an R package that allows the creation of ternary plots 
 (a.k.a. ternary graphs / simplex plots / Gibbs triangles / de Finetti diagrams) 
+and Holdridge life zone diagrams
 using the familiar functions of the default 'graphics' package.
 
 For simple use cases, generate ternary plots using the point-and-click
@@ -20,8 +21,15 @@ Ternary::TernaryApp()
 ```
 
 For greater control over your plots, use the R command line;
-usage instructions can be 
-[viewed here](https://ms609.github.io/Ternary/articles/Ternary.html).
+usage instructions are available for
+[Ternary plots](https://ms609.github.io/Ternary/articles/Ternary.html)
+(with an [introductory vignette for R beginners](https://ms609.github.io/Ternary/articles/new-users.html)), and for
+[Holdridge plots](https://ms609.github.io/Ternary/articles/Holdridge.html). 
+
+Install the development version from GitHub with 
+`devtools::install_github("ms609/Ternary", args="--recursive")`.
+(Requires [git](https://git-scm.com/) to be installed and added to
+your PATH system environment variable.)
 
 Please let me know of any feature requests or bugs by [opening an 
 issue on GitHub](https://github.com/ms609/Ternary/issues/).

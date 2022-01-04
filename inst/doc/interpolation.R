@@ -1,14 +1,23 @@
+## ----hcl-colors-hack, echo=FALSE----------------------------------------------
+if (getRversion() < 3.6) {
+  hcl.colors <- function (n, ...) {
+    colorRampPalette(c("#4B0055", "#274983", "#008298", "#00B28A",
+                         "#7ED357", "#FDE333"))(n)
+  }
+}
+
 ## ----contours-by-calculation--------------------------------------------------
 library("Ternary")
 par(mar = rep(0.2, 4))
-TernaryPlot(alab = 'a', blab = 'b', clab = 'c')
 
 FunctionToContour <- function (a, b, c) {
   a - c + (4 * a * b) + (27 * a * b * c)
 }
 
 values <- TernaryPointValues(FunctionToContour, resolution = 24L)
-ColourTernary(values)
+TernaryPlot(alab = 'a', blab = 'b', clab = 'c',
+            # Place an opaque fill behind grid lines:
+            panel.first = ColourTernary(values, spectrum = hcl.colors(256)))
 TernaryContour(FunctionToContour, resolution = 36L)
 
 
@@ -46,6 +55,8 @@ tri <- TriangleCentres(resolution = 12L)
 predicted <- Predict(tri[1:2, ])
 map <- rbind(x = tri['x', ], y = tri['y', ], z = predicted,
              down = tri['triDown', ])
+
+# Place a semitransparent colour fill over grid lines:
 ColourTernary(map)
 
 # Calculate contours
