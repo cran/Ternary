@@ -1,9 +1,14 @@
-# Ternary v1.2.4.9002
+# Ternary v2.1.0
+- Colour sub-region of ternary plot with `ColourTernary()`:
+  - Add `Polygon-Geometry` functions for polygon manipulation.
+  - Support `NA` values in `ColourTernary()`.
+- Tidy code formatting and catch typos.
+
+# Ternary v2.0.0
 - Create Holdridge plots using `HoldridgePlot()` and related functions
   ([#48](https://github.com/ms609/Ternary/issues/48)).
-- Add `TernaryContours()`
 - Add `panel.first` and `panel.last` parameters to `TernaryPlot()`
-  (fixing ([#54](https://github.com/ms609/Ternary/issues/54))).
+  (fixing [#54](https://github.com/ms609/Ternary/issues/54)).
 - Support graphical parameters (e.g. `xpd`) in `TernaryPlot()`.
 - Add introductory vignette for new R users.
 - Help diagnose non-installation of app.

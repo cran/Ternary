@@ -43,7 +43,7 @@ palettes <- list("#91aaa7",
 
 ltyInput <- function (id, name, val, none = TRUE) {
   selectInput(id, paste(name, 'line type'),
-              c(if(none) list('None' = 'blank'),
+              c(if (none) list('None' = 'blank'),
               list('Solid' = 'solid', 'Dotted' = 'dotted',
                    'Dashed' = 'dashed', 'Dot-Dash' = 'dotdash',
                    'Long-dash' = 'longdash', 'Two-dash' = 'twodash')),

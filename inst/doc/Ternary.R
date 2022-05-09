@@ -1,36 +1,40 @@
 ## ----shiny-app, eval = FALSE--------------------------------------------------
-#  install.packages('Ternary')
+#  install.packages("Ternary")
 #  Ternary::TernaryApp()
 
 ## ----Load package, eval = FALSE-----------------------------------------------
-#  install.packages('Ternary')
+#  install.packages("Ternary")
 
 ## ----Github package, eval = FALSE---------------------------------------------
-#  if (!require('devtools')) install.packages('devtools')
-#  install_github('ms609/Ternary')
+#  if (!require("devtools")) install.packages("devtools")
+#  install_github("ms609/Ternary")
 
 ## ----Load---------------------------------------------------------------------
-library('Ternary')
+library("Ternary")
 
 ## ----Create blank plot--------------------------------------------------------
 TernaryPlot()
 
 ## ----Create simple plot, fig.width = 7, fig.height = 7------------------------
 par(mfrow = c(2, 2), mar = rep(0.5, 4))
-for (dir in c('up', 'right', 'down', 'le')) {
-  TernaryPlot(point = dir, atip = 'A', btip = 'B', ctip = 'C',
-              alab = 'Aness', blab = 'Bness', clab = 'Cness')
+for (dir in c("up", "right", "down", "le")) {
+  TernaryPlot(point = dir, atip = "A", btip = "B", ctip = "C",
+              alab = "Aness", blab = "Bness", clab = "Cness")
   TernaryText(list(A = c(10, 1, 1), B = c(1, 10, 1), C = c(1, 1, 10)),
-              labels = c('P1', 'P2', 'P3'),
+              labels = c("P1", "P2", "P3"),
               col = cbPalette8[4], font = 2)
 }
 
 ## ----Do plotting--------------------------------------------------------------
+# Configure plotting area
 par(mfrow = c(1, 2), mar = rep(0.3, 4))
+
+# Initial plot
 TernaryPlot(alab = "Redder \u2192", blab = "\u2190 Greener", clab = "Bluer \u2192",
-            lab.col = c('red', 'darkgreen', 'blue'),
-            point = 'right', lab.cex = 0.8, grid.minor.lines = 0,
-            grid.lty = 'solid', col = rgb(0.9, 0.9, 0.9), grid.col = 'white', 
+            lab.col = c("red", "darkgreen", "blue"),
+            main = "Colours", # Title
+            point = "right", lab.cex = 0.8, grid.minor.lines = 0,
+            grid.lty = "solid", col = rgb(0.9, 0.9, 0.9), grid.col = "white", 
             axis.col = rgb(0.6, 0.6, 0.6), ticks.col = rgb(0.6, 0.6, 0.6),
             axis.rotate = FALSE,
             padding = 0.08)
@@ -55,9 +59,9 @@ AddToTernary(points, data_points, pch = 21, cex = 2.8,
                          character(1))
              )
 AddToTernary(text, data_points, names(data_points), cex = 0.8, font = 2)
-legend('bottomright', 
-       legend = c('Red', 'Orange', 'Yellow', 'Green'),
-       cex = 0.8, bty = 'n', pch = 21, pt.cex = 1.8,
+legend("bottomright", 
+       legend = c("Red", "Orange", "Yellow", "Green"),
+       cex = 0.8, bty = "n", pch = 21, pt.cex = 1.8,
        pt.bg = c(rgb(255,   0,   0, 128, NULL, 255), 
                  rgb(240, 180,  52, 128, NULL, 255),
                  rgb(210, 222, 102, 128, NULL, 255),
@@ -68,21 +72,34 @@ legend('bottomright',
 ###
 # Next plot:
 ###
-TernaryPlot('Steam', 'Ice', 'Water', 
-            grid.lines = 5, grid.lty = 'dotted',
-            grid.minor.lines = 1, grid.minor.lty = 'dotted',
-            point = 'West')
+TernaryPlot("Steam", "Ice", "Water", 
+            grid.lines = 5, grid.lty = "dotted",
+            grid.minor.lines = 1, grid.minor.lty = "dotted",
+            point = "West")
+
+# Another way to add a title
+title("Water phases", cex.main = 0.8)
+
+# Add horizontal grid lines
 HorizontalGrid()
+
+# Define a polygon
 middle_triangle <- matrix(c(
   30, 40, 30,
   30, 30, 40,
   55, 20, 25
 ), ncol = 3, byrow = TRUE)
-TernaryPolygon(middle_triangle, col = '#aaddfa', border = 'grey')
-TernaryLines(list(c(0, 100, 0), middle_triangle[1, ]), col = 'grey')
-TernaryLines(list(c(0, 0, 100), middle_triangle[2, ]), col = 'grey')
-TernaryLines(list(c(100, 0, 0), middle_triangle[3, ]), col = 'grey')
-TernaryArrows(c(20, 20, 60), c(30, 30, 40), length = 0.2, col = 'darkblue')
+
+# Add polygon to plot
+TernaryPolygon(middle_triangle, col = "#aaddfa", border = "grey")
+
+# Connect corners of polygon to plot corners
+TernaryLines(list(c(0, 100, 0), middle_triangle[1, ]), col = "grey")
+TernaryLines(list(c(0, 0, 100), middle_triangle[2, ]), col = "grey")
+TernaryLines(list(c(100, 0, 0), middle_triangle[3, ]), col = "grey")
+
+# Add an arrow
+TernaryArrows(c(20, 20, 60), c(30, 30, 40), length = 0.2, col = "darkblue")
 
 ## ----complex-plot-------------------------------------------------------------
 par(mar = rep(0.3, 4))
@@ -104,27 +121,27 @@ binnedSize <- cut(dat$grain_size, sizeBins)
 dat_cex <- mySizes[binnedSize]
 
 TernaryPlot(atip = expression(SiO[2]),
-            btip = expression(paste(Fe[2], O[3], ' (wt%)')),
+            btip = expression(paste(Fe[2], O[3], " (wt%)")),
             ctip = expression(paste(Al[2], O[3]))
 )
 
-TernaryPoints(dat[, c('sio2', 'fe2o3', 'al2o3')],
+TernaryPoints(dat[, c("sio2", "fe2o3", "al2o3")],
               cex = dat_cex,
               col = dat_col,
               pch = 16
               )
 
-legend('topleft', col = dat_col, pch = 16, 
-       legend = paste(binnedReflectance, '%'),
-       title = 'Reflectance', bty = 'n', cex = 0.8)
+legend("topleft", col = dat_col, pch = 16, 
+       legend = paste(binnedReflectance, "%"),
+       title = "Reflectance", bty = "n", cex = 0.8)
        
-legend('topright', pt.cex = dat_cex, pch = 16,
-       legend = paste(binnedSize, '\u03bcm'),
-       title = 'Grain size', bty = 'n', cex = 0.8)
+legend("topright", pt.cex = dat_cex, pch = 16,
+       legend = paste(binnedSize, "\u03bcm"),
+       title = "Grain size", bty = "n", cex = 0.8)
 
 ## ----Cartesian----------------------------------------------------------------
 par(mar = rep(0, 4)) # Reduce margins
-TernaryPlot(point = 'right', clockwise = FALSE)
+TernaryPlot(point = "right", clockwise = FALSE)
 cat("X range in this orientation:", TernaryXRange())
 cat("Y range in this orientation:", TernaryYRange())
 arrows(x0 = 0.5, y0 = 0.4, x1 = sqrt(3)/2, y1 = 0.4, length = 0.1,
@@ -136,14 +153,17 @@ text(x = 0.8, y = -0.5, "(0.8, -0.5)", col = cbPalette8[3])
 
 ## ----contours-----------------------------------------------------------------
 par(mar = rep(0.2, 4))
-TernaryPlot(alab = 'a', blab = 'b', clab = 'c')
+TernaryPlot(alab = "a", blab = "b", clab = "c")
 
 FunctionToContour <- function (a, b, c) {
   a - c + (4 * a * b) + (27 * a * b * c)
 }
 
+# Compute and plot colour tiles
 values <- TernaryPointValues(FunctionToContour, resolution = 24L)
 ColourTernary(values)
+
+# Add contour lines
 TernaryContour(FunctionToContour, resolution = 36L)
 
 
@@ -156,8 +176,13 @@ coordinates <- cbind(abs(rnorm(nPoints, 2, 3)),
                      abs(rnorm(nPoints, 1, 1.5)),
                      abs(rnorm(nPoints, 1, 0.5)))
 
+# Colour plot background
 ColourTernary(TernaryDensity(coordinates, resolution = 10L))
-TernaryPoints(coordinates, col = 'red', pch = '.')
+
+# Add points
+TernaryPoints(coordinates, col = "red", pch = ".")
+
+# Contour by point density
 TernaryDensityContour(coordinates, resolution = 30L)
 
 ## ----low-resolution-density-contours, echo = FALSE----------------------------
@@ -173,32 +198,32 @@ coordinates <- list(middle = c(1, 1, 1),
                  rightBorder = c(1, 2, 3)
                )
 par(mfrow = c(2, 2), mar = rep(0.2, 4))
-TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = 'up')
+TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "up")
 values <- TernaryDensity(coordinates, resolution = 3L)
 ColourTernary(values)
-TernaryPoints(coordinates, col = 'red')
-text(values[1, ], values[2, ], paste(values[3, ], '/ 6'), cex = 0.8)
+TernaryPoints(coordinates, col = "red")
+text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
 
-TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = 'right')
+TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "right")
 values <- TernaryDensity(coordinates, resolution = 3L)
 ColourTernary(values)
-TernaryPoints(coordinates, col = 'red')
-text(values[1, ], values[2, ], paste(values[3, ], '/ 6'), cex = 0.8)
+TernaryPoints(coordinates, col = "red")
+text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
 
-TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = 'down')
+TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "down")
 values <- TernaryDensity(coordinates, resolution = 3L)
 ColourTernary(values)
-TernaryPoints(coordinates, col = 'red')
-text(values[1, ], values[2, ], paste(values[3, ], '/ 6'), cex = 0.8)
+TernaryPoints(coordinates, col = "red")
+text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
 
-TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = 'left')
+TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "left")
 values <- TernaryDensity(coordinates, resolution = 3L)
 ColourTernary(values)
-TernaryPoints(coordinates, col = 'red')
-text(values[1, ], values[2, ], paste(values[3, ], '/ 6'), cex = 0.8)
+TernaryPoints(coordinates, col = "red")
+text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
 
 TernaryDensityContour(t(vapply(coordinates, I, double(3L))), 
-                      resolution = 24L, tolerance = -0.02, col = 'orange')
+                      resolution = 24L, tolerance = -0.02, col = "orange")
 
 
 
@@ -211,12 +236,12 @@ TernaryPlot(xlim = c(0.28, 0.38), ylim = c(0.1, 0.2), padding = 0.04)
 
 # Annotate grid lines at user-specified points:
 TernaryText(list(c(8, 72, 20), c(8, 82, 10)), c(20, 10), srt = -60, cex = 0.9,
-            col = 'darkgrey')
+            col = "darkgrey")
 TernaryText(list(c(10, 69, 21), c(20, 64, 16)), c(10, 20), srt = 0, cex = 0.9,
-            col = 'darkgrey')
+            col = "darkgrey")
 
 # Plot desired polygon
-TernaryPolygon(my_corners, col = '#2cbe4e')
+TernaryPolygon(my_corners, col = "#2cbe4e")
 
 # Show xlim, ylim and padding, using cartesian coordinates
 lines(c(0.28, 0.28, 0.38, 0.38, 0.28), c(0.1, 0.2, 0.2, 0.1, 0.1))
@@ -224,6 +249,6 @@ text(0.28, 0.15, "xlim[1]", pos = 2, srt = 90)
 text(0.38, 0.15, "xlim[2]", pos = 4, srt = 90)
 text(0.33, 0.1, "ylim[1]", pos = 1)
 text(0.33, 0.2, "ylim[2]", pos = 3)
-text(0.38, 0.1, '<padding>', pos = 4, cex = 0.75)
-text(0.38, 0.1, '<padding> ', pos = 2, cex = 0.75, srt = 90)
+text(0.38, 0.1, "<padding>", pos = 4, cex = 0.75)
+text(0.38, 0.1, "<padding> ", pos = 2, cex = 0.75, srt = 90)
 
