@@ -1,6 +1,6 @@
 ## ----hcl-colors-hack, echo=FALSE----------------------------------------------
 if (getRversion() < 3.6) {
-  hcl.colors <- function (n, ...) {
+  hcl.colors <- function(n, ...) {
     if (n == 4) {
       return(c("#A71B4B", "#F9C25C", "#81DEAD", "#584B9F"))
     } else {
@@ -34,7 +34,7 @@ plot(0:20, rep(2, 21), pch = 0:20,
 text(0:20, rep(0, 21), 0:20)
 
 ## ----seat-pch-----------------------------------------------------------------
-beltLawPch <- ifelse(Seatbelts[, 'law'], 3, 1)
+beltLawPch <- ifelse(Seatbelts[, "law"], 3, 1)
 
 ## ----by-law, fig.asp = 1------------------------------------------------------
 # Shrink the margin so the plot's easier to read
@@ -44,7 +44,7 @@ par(mar = c(0, 0, 0, 0))
 TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3])
 
 # Add a legend
-legend('topleft', c('Belt law', 'No law'), pch = c(3, 1))
+legend("topleft", c("Belt law", "No law"), pch = c(3, 1))
 
 # Use our beltLawPch variable to style points
 TernaryPoints(Seatbelts[, seat], pch = beltLawPch)
@@ -54,16 +54,16 @@ nPoints <- nrow(Seatbelts)
 rowCol <- hcl.colors(nPoints, palette = "viridis", alpha = 0.8)
 
 ## ----leg-funcs----------------------------------------------------------------
-SpectrumLegend <- function (spectrum, labels) {
+SpectrumLegend <- function(spectrum, labels) {
   nCol <- length(spectrum)
-  
+
   # Spectrum legends are inconvenient to produce:
   xMax <- TernaryXRange()[2]
   yMax <- TernaryYRange()[2]
   legendY0 <- yMax * 0.75
   legendY1 <- yMax * 0.95
   legendHeight <- legendY1 - legendY0
-  
+
   segX <- rep(xMax, nCol)
   segY <- seq_len(nCol) / nCol
   segY <- legendY0 + (segY * legendHeight)
@@ -76,10 +76,10 @@ SpectrumLegend <- function (spectrum, labels) {
 par(mar = c(0, 0, 0, 0))
 
 TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3])
-legend('topleft', c('Belt law', 'No law'), pch = c(3, 1))
+legend("topleft", c("Belt law", "No law"), pch = c(3, 1))
 
 # Now we can call our legend-adding function:
-SpectrumLegend(rowCol, labels = c('Jan 1969', 'Dec 1984'))
+SpectrumLegend(rowCol, labels = c("Jan 1969", "Dec 1984"))
 
 # Use our rowCol variable to style points
 TernaryPoints(Seatbelts[, seat], pch = beltLawPch,
@@ -88,15 +88,15 @@ TernaryPoints(Seatbelts[, seat], pch = beltLawPch,
 
 ## ----month-spectrum, fig.asp = 1----------------------------------------------
 # Define a suitable cyclical spectrum
-fourSeasons <- hcl.colors(4, 'Spectral')
+fourSeasons <- hcl.colors(4, "Spectral")
 monthCol <- colorRampPalette(fourSeasons[c(1:4, 1)])(13)[c(7:12, 1:6)]
 
 par(mar = c(0, 0, 0, 0))
 
 TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3])
-legend('topleft', c('Belt law', 'No law'), pch = c(3, 1))
+legend("topleft", c("Belt law", "No law"), pch = c(3, 1))
 
-SpectrumLegend(monthCol, c('Jan', 'Dec'))
+SpectrumLegend(monthCol, c("Jan", "Dec"))
 
 # Use our rowCol variable to style points
 TernaryPoints(Seatbelts[, seat], pch = beltLawPch,
@@ -107,25 +107,25 @@ TernaryPoints(Seatbelts[, seat], pch = beltLawPch,
 par(mar = c(0, 0, 0, 0))
 
 TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3],
-            # Magnify the 'action':
+            # Magnify the "action":
             xlim = c(0.055, 0.095), ylim = c(0.48, 0.52))
 
-legend('topleft', c('No law', 'Belt law'),
+legend("topleft", c("No law", "Belt law"),
        col = 2:3, pch = 1, lwd = 2, lty = NA)
 sizes <- c(3, 7, 12)
  scale <- 200
-legend('topright', title = 'Casualties / Mm', legend = sizes,
+legend("topright", title = "Casualties / Mm", legend = sizes,
       pt.cex = sizes / 1000 * scale,
       pch = 1, lwd = 2, lty = NA)
 
 # Use our rowCol variable to style points
 TernaryPoints(Seatbelts[, seat], pch = 1, lwd = 2,
-              cex = Seatbelts[, 'DriversKilled'] / Seatbelts[, 'kms'] * scale,
-              col = 2 + Seatbelts[, 'law'])
+              cex = Seatbelts[, "DriversKilled"] / Seatbelts[, "kms"] * scale,
+              col = 2 + Seatbelts[, "law"])
 
 ## ----all-deaths---------------------------------------------------------------
 # Subset our data to extract only Octobers:
-oct <- month.name == 'October'
+oct <- month.name == "October"
 octBelts <- Seatbelts[oct, ]
 
 par(mar = c(0, 0, 0, 0))

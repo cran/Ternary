@@ -1,6 +1,6 @@
 ## ----hcl-colors-hack, echo=FALSE----------------------------------------------
 if (getRversion() < 3.6) {
-  hcl.colors <- function (n, ...) {
+  hcl.colors <- function(n, ...) {
     colorRampPalette(c("#4B0055", "#274983", "#008298", "#00B28A",
                          "#7ED357", "#FDE333"))(n)
   }
@@ -10,19 +10,19 @@ if (getRversion() < 3.6) {
 library("Ternary")
 par(mar = rep(0.2, 4))
 
-FunctionToContour <- function (a, b, c) {
+FunctionToContour <- function(a, b, c) {
   a - c + (4 * a * b) + (27 * a * b * c)
 }
 
 values <- TernaryPointValues(FunctionToContour, resolution = 24L)
-TernaryPlot(alab = 'a', blab = 'b', clab = 'c',
+TernaryPlot(alab = "a", blab = "b", clab = "c",
             # Place an opaque fill behind grid lines:
             panel.first = ColourTernary(values, spectrum = hcl.colors(256)))
 TernaryContour(FunctionToContour, resolution = 36L)
 
 
 ## ----idw-interpolation--------------------------------------------------------
-# If using your own data, set 
+# If using your own data, set
 # abc <- [Three-column matrix containing a, b, c coordinates of points]
 # response <- [Vector of values at the points specified in abc]
 
@@ -42,15 +42,15 @@ response <- FunctionToContour(a, b, c)
 
 # Now we must start a plot, to define the coordinate system
 par(mar = rep(0.2, 4))
-TernaryPlot(alab = 'a', blab = 'b', clab = 'c')
+TernaryPlot(alab = "a", blab = "b", clab = "c")
 
 # Convert measured points to XY
 xy <- TernaryToXY(abc)
 
 # Use an inverse distance weighting to interpolate between measured points
-Predict <- function (predXY) {
-  Distance <- function (a, b) {
-    apply(a, 2, function (pt) sqrt(colSums((pt - b) ^ 2)))
+Predict <- function(predXY) {
+  Distance <- function(a, b) {
+    apply(a, 2, function(pt) sqrt(colSums((pt - b) ^ 2)))
   }
   dists <- Distance(xy, predXY)
   id <- 1 / dists
@@ -61,24 +61,24 @@ Predict <- function (predXY) {
 }
 
 # Predict at triangle centres
-tri <- TriangleCentres(resolution = 12L) 
+tri <- TriangleCentres(resolution = 12L)
 # Adjust the resolution to suit your own dataset
 
 # Now we interpolate between our known values to generate a colour for each
 # of our tiles
 predicted <- Predict(tri[1:2, ])
-map <- rbind(x = tri['x', ], y = tri['y', ], z = predicted,
-             down = tri['triDown', ])
+map <- rbind(x = tri["x", ], y = tri["y", ], z = predicted,
+             down = tri["triDown", ])
 
 # Place a semitransparent colour fill over grid lines:
 ColourTernary(map)
 
 # Calculate contours
-PredictABC <- function (a, b, c) Predict(TernaryToXY(rbind(a, b, c)))
+PredictABC <- function(a, b, c) Predict(TernaryToXY(rbind(a, b, c)))
 TernaryContour(PredictABC, resolution = 36L)
 
 # Mark the points at which we took measurements
-TernaryPoints(abc, pch = 3, col = '#cc3333')
+TernaryPoints(abc, pch = 3, col = "#cc3333")
 
 ## ----convex-hull, warning = FALSE---------------------------------------------
 # Select some points at which to sample
@@ -121,7 +121,7 @@ map <- rbind(tri, z = predicted)
 ColourTernary(map)
 
 # Calculate contours
-PredictABC <- function (a, b, c) Predict(TernaryToXY(rbind(a, b, c)))
+PredictABC <- function(a, b, c) Predict(TernaryToXY(rbind(a, b, c)))
 TernaryContour(PredictABC, resolution = 36L,
                # `within` controls where contours are calculated
                within = inHull$hull)

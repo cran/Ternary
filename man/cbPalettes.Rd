@@ -18,7 +18,8 @@ An object of class \code{character} of length 15.
 }
 \source{
 \itemize{
-\item \code{cbPalette8}: \cite{Wong B. 2011. Color blindness. Nat. Methods. 8:441. \doi{10.1038/nmeth.1618}}
+\item \code{cbPalette8}: \cite{Wong B. 2011. Color blindness. Nat. Methods. 8:441.
+\doi{10.1038/nmeth.1618}}
 \item \code{cbPalette15}: \url{http://mkweb.bcgsc.ca/biovis2012/color-blindness-palette.png}
 }
 }
@@ -33,22 +34,23 @@ cbPalette15
 Colour palettes recommended for use with colour blind audiences.
 }
 \details{
+Since R 4.0, \code{cbPalette8} is available in base R as \code{palette.colors(8)}.
+
 \code{cbPalette15} is a \href{http://mkweb.bcgsc.ca/brewer/}{Brewer palette}.
 Because colours 4 and 7 are difficult to distinguish from colours 13 and 3,
 respectively, in individuals with tritanopia, \code{cbPalette13} omits these
 colours (i.e. \code{cbPalette13 <- cbPalette15[-c(4, 7)]}).
 }
 \examples{
-data('cbPalette8')
+data("cbPalette8")
 plot.new()
 plot.window(xlim = c(1, 16), ylim = c(0, 3))
 text(1:8 * 2, 3, 1:8, col = cbPalette8)
 points(1:8 * 2, rep(2, 8), col = cbPalette8, pch = 15)
 
-data('cbPalette15')
+data("cbPalette15")
 text(1:15, 1, col = cbPalette15)
-text(c(4, 7), 1, '[   ]')
+text(c(4, 7), 1, "[   ]")
 points(1:15, rep(0, 15), col = cbPalette15, pch = 15)
-
 }
 \keyword{datasets}

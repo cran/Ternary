@@ -28,7 +28,8 @@ Tropical Science Center, San José
 
 Leemans, R. (1990),
 "Possible change in natural vegetation patterns due to a global warming",
-\emph{International Institute for Applied Systems Analysis} Working paper WP-90-08.
+\emph{International Institute for Applied Systems Analysis} Working paper
+WP-90-08.
 \url{https://pure.iiasa.ac.at/id/eprint/3443/1/WP-90-008.pdf}
 }
 \usage{
@@ -44,7 +45,8 @@ holdridgeClassesUp
 \code{holdridgeClasses} is a character vector naming, from left to right,
 top to bottom, the 38 classes defined by the International Institute for
 Applied Systems Analysis (IIASA).
-
+}
+\details{
 \code{holdridgeLifeZones} is a character vector naming, from left to right,
 top to bottom, the 38 cells of the Holdridge classification plot.
 

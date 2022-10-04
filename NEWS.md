@@ -1,3 +1,9 @@
+# Ternary v2.1.1
+
+- Fix regression that caused `col` parameter to be ignored.
+- Fix failure to plot grid when `grid.lines` is integer.
+- Mention `srt` graphical parameter in `TernaryText()` documentation.
+
 # Ternary v2.1.0
 - Colour sub-region of ternary plot with `ColourTernary()`:
   - Add `Polygon-Geometry` functions for polygon manipulation.

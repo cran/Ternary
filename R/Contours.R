@@ -3,8 +3,8 @@
 #' Intended to facilitate coloured contour plots with [`ColourTernary()`],
 #' `TernaryPointValue()` evaluates a function at points on a triangular grid;
 #' `TernaryDensity()` calculates the density of points in each grid cell.
-#' 
-#' 
+#'
+#'
 #' @template FuncParam
 #' @template resolutionParam
 #' @template directionParam
@@ -93,7 +93,7 @@ TriangleCentres <- function (resolution = 48L,
     triX <- seq(from = -0.5 + offset, to = 0.5 - offset, by=offset)
     upY <- seq(from = triangleHeight / 3,
                to = sqrt(0.75) - (2 * triangleHeight / 3), length.out = resolution)
-    x <- unlist(lapply(seq_len(resolution), function (yStep) {
+    x <- unlist(lapply(seq_len(resolution), function(yStep) {
       upX <- triX[seq(from = yStep, to = (2L * resolution) - yStep, by = 2L)]
       downX <- if (yStep == resolution) integer(0) else 
         triX[seq(from=yStep + 1, to = (2L * resolution) - yStep - 1, by = 2L)]
@@ -108,7 +108,7 @@ TriangleCentres <- function (resolution = 48L,
     triX <- seq(from = -0.5 + offset, to = 0.5 - offset, by=offset)
     upY <- seq(from = 0 - (2 * triangleHeight / 3),
                to = - sqrt(0.75) + triangleHeight / 3, length.out = resolution)
-    x <- unlist(lapply(seq_len(resolution), function (yStep) {
+    x <- unlist(lapply(seq_len(resolution), function(yStep) {
       upX <- triX[seq(from = yStep, to = (2L * resolution) - yStep, by = 2L)]
       downX <- if (yStep == resolution) integer(0) else 
         triX[seq(from=yStep + 1, to = (2L * resolution) - yStep - 1, by = 2L)]
@@ -123,7 +123,7 @@ TriangleCentres <- function (resolution = 48L,
     rightX <- seq(from = triangleHeight / 3,
                   to = sqrt(0.75) - (2 * triangleHeight / 3), length.out = resolution)
     triY <- seq(from = -0.5 + offset, to = 0.5 - offset, by=offset)
-    y <- unlist(lapply(seq_len(resolution), function (xStep) {
+    y <- unlist(lapply(seq_len(resolution), function(xStep) {
       rightY <- triY[seq(from = xStep, to = (2L * resolution) - xStep, by = 2L)]
       leftY  <- if (xStep == resolution) integer(0) else 
         triY[seq(from=xStep + 1, to = (2L * resolution) - xStep - 1, by = 2L)]
@@ -138,10 +138,10 @@ TriangleCentres <- function (resolution = 48L,
     rightX <- seq(from = 0 - (2 * triangleHeight / 3),
                   to = - sqrt(0.75) + triangleHeight / 3, length.out = resolution)
     triY <- seq(from = -0.5 + offset, to = 0.5 - offset, by=offset)
-    y <- unlist(lapply(seq_len(resolution), function (xStep) {
+    y <- unlist(lapply(seq_len(resolution), function(xStep) {
       rightY <- triY[seq(from = xStep, to = (2L * resolution) - xStep, by = 2L)]
       leftY  <- if (xStep == resolution) integer(0) else 
-        triY[seq(from=xStep + 1, to = (2L * resolution) - xStep - 1, by = 2L)]
+        triY[seq(from = xStep + 1, to = (2L * resolution) - xStep - 1, by = 2L)]
       c(rbind(rightY, c(leftY, NA)))[-((resolution - xStep + 1) * 2L)]
     }))
     x <- rep(rightX[seq_len(resolution)], trianglesInRow)
@@ -258,14 +258,14 @@ TernaryDensity <- function (coordinates, resolution = 48L,
     {if (abc[2] == 0) sum(theseEdges[2, ] == 0) else 0L} +
     {if (abc[3] == 0) sum(theseEdges[3, ] == 0) else 0L}
   }
-  OnDownEdge <- function (abc) {
+  OnDownEdge <- function(abc) {
     sum(
       apply(edges, 2, AllEqual, abc + c(0.5, 0.5, 1.0)),
       apply(edges, 2, AllEqual, abc + c(0.5, 1.0, 0.5)),
       apply(edges, 2, AllEqual, abc + c(1.0, 0.5, 0.5))
     )
   }
-  OnUpVertex <- function (abc) {
+  OnUpVertex <- function(abc) {
     onThisTriangle <-
       apply(vertices, 2, AllEqual, abc + c(1L, 0L, 0L)) |
       apply(vertices, 2, AllEqual, abc + c(0L, 1L, 0L)) |
@@ -275,7 +275,7 @@ TernaryDensity <- function (coordinates, resolution = 48L,
         2L * vertexOnEdge[onThisTriangle], # 2 for each point on a vertex on edge of plot, 
         6L * vertexOnCorner[onThisTriangle])# 6 for each point on outer vertex of plot
   }
-  OnDownVertex <- function (abc) {
+  OnDownVertex <- function(abc) {
     onThisTriangle <-
       apply(vertices, 2, AllEqual, abc + c(1L, 1L, 0L)) |
       apply(vertices, 2, AllEqual, abc + c(1L, 0L, 1L)) |
@@ -356,7 +356,7 @@ TernaryUpTiles <- function(x, y, resolution, col) {
   widthBy2 <- width / 2
   height <- sqrt(0.75) / resolution
   heightBy3 <- height / 3
-  vapply(seq_along(x), function (i) {
+  vapply(seq_along(x), function(i) {
     cornerX <- x[i] + c(0, widthBy2, -widthBy2)
     cornerY <- y[i] + c(heightBy3 + heightBy3, rep(-heightBy3, 2))
     polygon(cornerX, cornerY, col = col[i], border = NA)
@@ -373,8 +373,8 @@ TernaryDownTiles <- function(x, y, resolution, col) {
   widthBy2 <- width / 2
   height <- sqrt(0.75) / resolution
   heightBy3 <- height / 3
-  
-  vapply(seq_along(x), function (i) {
+
+  vapply(seq_along(x), function(i) {
     cornerX <- x[i] + c(0, widthBy2, -widthBy2)
     cornerY <- y[i] - c(heightBy3 + heightBy3, rep(-heightBy3, 2))
     polygon(cornerX, cornerY, col = col[i], border = NA)
@@ -393,7 +393,7 @@ TernaryLeftTiles <- function(x, y, resolution, col) {
   height <- 1 / resolution
   heightBy2 <- height / 2
   
-  vapply(seq_along(x), function (i) {
+  vapply(seq_along(x), function(i) {
     cornerX <- x[i] - c(widthBy3 + widthBy3, rep(-widthBy3, 2))
     cornerY <- y[i] + c(0, heightBy2, -heightBy2)
     polygon(cornerX, cornerY, col = col[i], border = NA)
@@ -411,7 +411,7 @@ TernaryRightTiles <- function(x, y, resolution, col) {
   height <- 1 / resolution
   heightBy2 <- height / 2
   
-  vapply(seq_along(x), function (i) {
+  vapply(seq_along(x), function(i) {
     cornerX <- x[i] + c(widthBy3 + widthBy3, rep(-widthBy3, 2))
     cornerY <- y[i] + c(0, heightBy2, -heightBy2)
     polygon(cornerX, cornerY, col = col[i], border = NA)
@@ -429,8 +429,8 @@ TernaryRightTiles <- function(x, y, resolution, col) {
 #' 
 #' @aliases TernaryUpTiles TernaryDownTiles TernaryLeftTiles TernaryRightTiles
 #' @param x,y Numeric vectors specifying _x_ and _y_ coordinates of centres of each triangle.
-#' @param down Logical vector specifying `TRUE` if each triangle should point down (or right),
-#' `FALSE` otherwise.
+#' @param down Logical vector specifying `TRUE` if each triangle should point
+#' down (or right), `FALSE` otherwise.
 #' @template resolutionParam
 #' @param col Vector specifying the colour with which to fill each triangle.
 #' @template directionParam
@@ -452,8 +452,8 @@ TernaryRightTiles <- function(x, y, resolution, col) {
 #' 
 #' @family functions for colouring and shading
 #' @export
-TernaryTiles <- function (x, y, down, resolution, col, 
-                          direction = getOption("ternDirection", 1L)) {
+TernaryTiles <- function(x, y, down, resolution, col, 
+                         direction = getOption("ternDirection", 1L)) {
   down <- as.logical(down)
   if (direction %% 2) {
     TernaryDownTiles(x[down], y[down], resolution, col[down])
@@ -469,8 +469,8 @@ TernaryTiles <- function (x, y, down, resolution, col,
 
 #' Colour a ternary plot according to the output of a function
 #' 
-#' @param values Numeric matrix, possibly created using [`TernaryPointValues()`],
-#' with four named rows: 
+#' @param values Numeric matrix, possibly created using 
+#' [`TernaryPointValues()`], with four named rows: 
 #' `x`, `y`, cartesian coordinates of each triangle centre; 
 #' `z`, value associated with that coordinate;
 #' `down`, triangle direction: `0` = point upwards; `1` = point downwards.
@@ -514,10 +514,10 @@ TernaryTiles <- function (x, y, down, resolution, col,
 #TODO when require r>3.6.0, update viridis calls to use hcl.colors()
 #' @importFrom grDevices col2rgb
 #' @export
-ColourTernary <- function (values, 
-                           spectrum = viridisLite::viridis(256L, alpha = 0.6),
-                           resolution = sqrt(ncol(values)),
-                           direction = getOption("ternDirection", 1L)) {
+ColourTernary <- function(values, 
+                          spectrum = viridisLite::viridis(256L, alpha = 0.6),
+                          resolution = sqrt(ncol(values)),
+                          direction = getOption("ternDirection", 1L)) {
   z <- values["z", ]
   col <- if (is.null(spectrum) || 
              (!is.numeric(z) && 
@@ -638,7 +638,7 @@ TernaryContour <- function (Func, resolution = 96L,
     if (length(evaluated) == 1L) {
       warning("`Func(a, b, c)` should return a vector, but returned a single value.")
     }
-    
+
     ret <- rep_len(NA_real_, length(x))
     ret[inPlot] <- evaluated
     # Return:
@@ -649,84 +649,85 @@ TernaryContour <- function (Func, resolution = 96L,
 }
 
 #' Add contours of estimated point density to a ternary plot
-#' 
-#' Use two-dimensional kernel density estimation to plot contours of 
+#'
+#' Use two-dimensional kernel density estimation to plot contours of
 #' point density.
-#' 
+#'
 #' This function is modelled on `MASS::kde2d()`, which uses
 #' "an axis-aligned bivariate normal kernel, evaluated on a square grid".
-#' 
+#'
 #' This is to say, values are calculated on a square grid, and contours fitted
 #' between these points.  This produces a couple of artefacts.
-#' Firstly, contours may not extend beyond the outermost point within the 
-#' diagram, which may fall some distance from the margin of the plot if a 
+#' Firstly, contours may not extend beyond the outermost point within the
+#' diagram, which may fall some distance from the margin of the plot if a
 #' low `resolution` is used.  Setting a negative `tolerance` parameter allows
 #' these contours to extend closer to (or beyond) the margin of the plot.
-#' 
+#'
 #' Individual points cannot fall outside the margins of the ternary diagram,
 #' but their associated kernels can. In order to sample regions of the kernels
-#' that have "bled" outside the ternary diagram, each point's value is 
-#' calculated by summing the point density at that point and at equivalent 
-#' points outside the ternary diagram, "reflected" across the margin of 
+#' that have "bled" outside the ternary diagram, each point's value is
+#' calculated by summing the point density at that point and at equivalent
+#' points outside the ternary diagram, "reflected" across the margin of
 #' the plot (see function [`ReflectedEquivalents`]).  This correction can be
 #' disabled by setting the `edgeCorrection` parameter to `FALSE`.
-#' 
+#'
 #' A model based on a triangular grid may be more appropriate in certain
-#' situations, but is non-trivial to implement; if this distinction is 
-#' important to you, please let the maintainers known by opening a 
+#' situations, but is non-trivial to implement; if this distinction is
+#' important to you, please let the maintainers known by opening a
 #' \href{https://github.com/ms609/Ternary/issues/new?title=Triangular+KDE}{Github issue}.
-#' 
-#' 
+#'
+#'
 #' @template coordinatesParam
-#' @param bandwidth Vector of bandwidths for x and y directions. 
+#' @param bandwidth Vector of bandwidths for x and y directions.
 #' Defaults to normal reference bandwidth (see `MASS::bandwidth.nrd`).
 #' A scalar value will be taken to apply to both directions.
 #' @template resolutionParam
-#' @param tolerance Numeric specifying how close to the margins the contours 
+#' @param tolerance Numeric specifying how close to the margins the contours
 #' should be plotted, as a fraction of the size of the triangle.
-#' Negative values will cause contour lines to extend beyond the margins of the plot.
+#' Negative values will cause contour lines to extend beyond the margins of the
+#' plot.
 #' @template directionParam
 #' @template dotsToContour
 #' @param edgeCorrection Logical specifying whether to correct for edge effects
 #'  (see details).
-#'  
+#'
 #' @examples
-#' 
+#'
 #' TernaryPlot(axis.labels = seq(0, 10, by = 1))
-#' 
+#'
 #' nPoints <- 400L
 #' coordinates <- cbind(abs(rnorm(nPoints, 2, 3)),
 #'                      abs(rnorm(nPoints, 1, 1.5)),
 #'                      abs(rnorm(nPoints, 1, 0.5)))
-#' 
+#'
 #' ColourTernary(TernaryDensity(coordinates, resolution = 10L))
 #' TernaryPoints(coordinates, col = "red", pch = ".")
 #' TernaryDensityContour(coordinates, resolution = 30L)
-#'  
+#'
 #' @author Adapted from `MASS::kde2d()` by Martin R. Smith
-#' 
+#'
 #' @family contour plotting functions
 #' @importFrom stats dnorm quantile var
 #' @export
-TernaryDensityContour <- function (coordinates, bandwidth, resolution = 25L, 
-                                   tolerance = -0.2 / resolution,
-                                   edgeCorrection = TRUE,
-                                   direction = getOption("ternDirection", 1L),
-                                   ...) {
+TernaryDensityContour <- function(coordinates, bandwidth, resolution = 25L,
+                                  tolerance = -0.2 / resolution,
+                                  edgeCorrection = TRUE,
+                                  direction = getOption("ternDirection", 1L),
+                                  ...) {
   # Adapted from MASS::kde2d
   xy <- apply(coordinates, 1, TernaryCoords)
   x <- xy[1, ]
   y <- xy[2, ]
   n <- length(x)
-  
-  Bandwidth <- function (x, lengthX) {
+
+  Bandwidth <- function(x, lengthX) {
     # Adapted from MASS::bandwidth.nrd
     r <- quantile(x, c(0.25, 0.75))
     h <- (r[2L] - r[1L]) / 1.34
     # Don't multiply by 4 just to divide by 4 again...
     1.06 * min(sqrt(var(x)), h) * lengthX ^ (-0.2)
   }
-  
+
   h <- if (missing(bandwidth)) {
     c(Bandwidth(x, n), Bandwidth(y, n))
   } else {
@@ -734,8 +735,8 @@ TernaryDensityContour <- function (coordinates, bandwidth, resolution = 25L,
   }
   if (any(h <= 0))
     stop("bandwidths must be strictly positive")
-  
-  switch (direction, {
+
+  switch(direction, {
     gx <- seq(-0.5, 0.5, length.out = resolution)
     gy <- seq(0, sqrt(0.75), length.out = resolution)
   }, {
@@ -744,34 +745,37 @@ TernaryDensityContour <- function (coordinates, bandwidth, resolution = 25L,
   }, {
     gx <- seq(-0.5, 0.5, length.out = resolution)
     gy <- seq(-sqrt(0.75), 0, length.out = resolution)
-  }, { 
+  }, {
     gx <- seq(-sqrt(0.75), 0, length.out = resolution)
     gy <- seq(-0.5, 0.5, length.out = resolution)
   })
-  
+
   if (edgeCorrection) {
-    KDE <- function (ix, iy) {
-      if (OutsidePlot(ix, iy, tolerance = tolerance)) NA else {
-        reflections <- ReflectedEquivalents(ix, iy, direction=direction)[[1]]
+    KDE <- function(ix, iy) {
+      if (OutsidePlot(ix, iy, tolerance = tolerance)) {
+        NA
+      } else {
+        reflections <- ReflectedEquivalents(ix, iy, direction = direction)[[1]]
         ax <- outer(c(ix, reflections[, 1]), x, "-") / h[1L]
         ay <- outer(c(iy, reflections[, 2]), y, "-") / h[2L]
-        sum(vapply(seq_len(1L + dim(reflections)[1]), function (i)
-          tcrossprod(matrix(dnorm(ax[i, ]), ncol=n), matrix(dnorm(ay[i, ]), ncol=n)),
-          double(1))) / prod(n, h)
+        sum(vapply(seq_len(1L + dim(reflections)[1]), function(i) {
+          tcrossprod(matrix(dnorm(ax[i, ]), ncol = n),
+                     matrix(dnorm(ay[i, ]), ncol = n))
+          }, double(1))) / prod(n, h)
       }
     }
-    
-    z <- matrix(mapply(KDE, gx, rep(gy, each=length(gx))), ncol=length(gx))
+
+    z <- matrix(mapply(KDE, gx, rep(gy, each = length(gx))), ncol = length(gx))
   } else {
     ax <- outer(gx, x, "-") / h[1L]
     ay <- outer(gy, y, "-") / h[2L]
     z <- tcrossprod(matrix(dnorm(ax), ncol = n),
                     matrix(dnorm(ay), ncol = n)) / prod(n, h)
-    
+
     # TODO make more efficient by doing this intelligently rather than lazily
     zOffPlot <- outer(gx, gy, OutsidePlot, tolerance = tolerance)
     z[zOffPlot] <- NA
   }
-  
-  contour(list(x = gx, y = gy, z = z), add=TRUE, ...)
+
+  contour(list(x = gx, y = gy, z = z), add = TRUE, ...)
 }

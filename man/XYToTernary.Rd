@@ -13,21 +13,21 @@ XYToHoldridge(x, y)
 XYToPetPrec(x, y)
 }
 \arguments{
-\item{x, y}{Numeric values giving the \emph{x} and \emph{y} coordinates of a point or points.}
+\item{x, y}{Numeric values giving the \emph{x} and \emph{y} coordinates of a point or
+points.}
 
 \item{direction}{(optional) Integer specifying the direction that the current ternary plot
 should point: 1, up; 2, right; 3, down; 4, left.}
 }
 \value{
-\code{XYToTernary()} Returns the ternary point(s) corresponding to the specified \emph{x} and \emph{y}
-coordinates, where a + b + c = 1.
+\code{XYToTernary()} Returns the ternary point(s) corresponding to the
+specified \emph{x} and \emph{y} coordinates, where a + b + c = 1.
 }
 \description{
 Convert cartesian (\emph{x}, \emph{y}) coordinates to a point in ternary space.
 }
 \examples{
 XYToTernary(c(0.1, 0.2), 0.5)
-
 }
 \seealso{
 Other coordinate translation functions: 

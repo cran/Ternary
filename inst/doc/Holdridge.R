@@ -1,6 +1,6 @@
 ## ----hcl-colors-hack, echo=FALSE----------------------------------------------
 if (getRversion() < 3.6) {
-  hcl.colors <- function (n, ...) {
+  hcl.colors <- function(n, ...) {
     colorRampPalette(c("#4B0055", "#274983", "#008298", "#00B28A",
                          "#7ED357", "#FDE333"))(n)
   }
@@ -10,7 +10,7 @@ if (getRversion() < 3.6) {
 # Load package and data
 library("Ternary")
 
-data(holdridge, holdridgeLifeZonesUp, package = 'Ternary')
+data(holdridge, holdridgeLifeZonesUp, package = "Ternary")
 
 # Suppress plot margins
 par(mar = c(0, 0, 0, 0))
@@ -23,5 +23,4 @@ HoldridgeBelts()
 HoldridgePoints(holdridge$PET, holdridge$Precipitation,
                 col = hcl.colors(91)[abs(holdridge$Latitude) + 1],
                 lwd = 2)
-
 
