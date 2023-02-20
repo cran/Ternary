@@ -11,7 +11,7 @@
 
 <meta name="author" content="Martin R. Smith" />
 
-<meta name="date" content="2022-11-07" />
+<meta name="date" content="2023-02-20" />
 
 <title>Introduction for new R users</title>
 
@@ -299,23 +299,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -358,7 +352,7 @@ display: none;
 
 <h1 class="title toc-ignore">Introduction for new R users</h1>
 <h4 class="author">Martin R. Smith</h4>
-<h4 class="date">2022-11-07</h4>
+<h4 class="date">2023-02-20</h4>
 
 </div>
 
@@ -544,6 +538,9 @@ vignettes:</p>
 <li><p><a href="Ternary.html">Getting started guide</a></p></li>
 <li><p><a href="interpolation.html">Interpolating and
 contouring</a></p></li>
+<li><p><a href="annotation.html">Annotation of points</a></p></li>
+<li><p><a href="Holdridge.html">Plotting Holdridge climate
+zones</a></p></li>
 </ul>
 </div>
 

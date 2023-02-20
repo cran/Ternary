@@ -2,20 +2,20 @@
 #  install.packages("Ternary")
 #  Ternary::TernaryApp()
 
-## ----Load package, eval = FALSE-----------------------------------------------
+## ----install-package, eval = FALSE--------------------------------------------
 #  install.packages("Ternary")
 
-## ----Github package, eval = FALSE---------------------------------------------
+## ----github-package, eval = FALSE---------------------------------------------
 #  if (!require("devtools")) install.packages("devtools")
 #  install_github("ms609/Ternary")
 
-## ----Load---------------------------------------------------------------------
+## ----library-ternary----------------------------------------------------------
 library("Ternary")
 
-## ----Create blank plot--------------------------------------------------------
+## ----create-blank-plot--------------------------------------------------------
 TernaryPlot()
 
-## ----Create simple plot, fig.width = 7, fig.height = 7------------------------
+## ----create-simple-plot, fig.width = 7, fig.height = 7------------------------
 par(mfrow = c(2, 2), mar = rep(0.5, 4))
 for (dir in c("up", "right", "down", "le")) {
   TernaryPlot(point = dir, atip = "A", btip = "B", ctip = "C",
@@ -25,7 +25,7 @@ for (dir in c("up", "right", "down", "le")) {
               col = cbPalette8[4], font = 2)
 }
 
-## ----Do plotting--------------------------------------------------------------
+## ----two-stylised-plots-------------------------------------------------------
 # Configure plotting area
 par(mfrow = c(1, 2), mar = rep(0.3, 4))
 
@@ -139,7 +139,7 @@ legend("topright", pt.cex = dat_cex, pch = 16,
        legend = paste(binnedSize, "\u03bcm"),
        title = "Grain size", bty = "n", cex = 0.8)
 
-## ----Cartesian----------------------------------------------------------------
+## ----cartesian----------------------------------------------------------------
 par(mar = rep(0, 4)) # Reduce margins
 TernaryPlot(point = "right", clockwise = FALSE)
 cat("X range in this orientation:", TernaryXRange())
