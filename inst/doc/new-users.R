@@ -53,33 +53,14 @@ TernaryPoints(Seatbelts[, seat], pch = beltLawPch)
 nPoints <- nrow(Seatbelts)
 rowCol <- hcl.colors(nPoints, palette = "viridis", alpha = 0.8)
 
-## ----leg-funcs----------------------------------------------------------------
-SpectrumLegend <- function(spectrum, labels) {
-  nCol <- length(spectrum)
-
-  # Spectrum legends are inconvenient to produce:
-  xMax <- TernaryXRange()[2]
-  yMax <- TernaryYRange()[2]
-  legendY0 <- yMax * 0.75
-  legendY1 <- yMax * 0.95
-  legendHeight <- legendY1 - legendY0
-
-  segX <- rep(xMax, nCol)
-  segY <- seq_len(nCol) / nCol
-  segY <- legendY0 + (segY * legendHeight)
-  segments(segX, segY - segY[1] + legendY0, y1 = segY, col = spectrum,
-           lwd = 4)
-  text(range(segX), c(legendY0, legendY1), labels, pos = 2)
-}
-
 ## ----spectrum, fig.asp = 1----------------------------------------------------
 par(mar = c(0, 0, 0, 0))
 
 TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3])
 legend("topleft", c("Belt law", "No law"), pch = c(3, 1))
 
-# Now we can call our legend-adding function:
-SpectrumLegend(rowCol, labels = c("Jan 1969", "Dec 1984"))
+# Add a legend for our colour scale
+PlotTools::SpectrumLegend(palette = rowCol, legend = c("Dec 1984", "Jan 1969"))
 
 # Use our rowCol variable to style points
 TernaryPoints(Seatbelts[, seat], pch = beltLawPch,
@@ -96,9 +77,18 @@ par(mar = c(0, 0, 0, 0))
 TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3])
 legend("topleft", c("Belt law", "No law"), pch = c(3, 1))
 
-SpectrumLegend(monthCol, c("Jan", "Dec"))
+legendMonths <- seq(1, 12, by = 2)
+# Add a legend for our colour index
+legend(
+  "topright",
+  bty = "n", # No frame
+  pch = 15, # Filled square
+  col = monthCol,
+  legend = month.abb,
+  title = "Month"
+)
 
-# Use our rowCol variable to style points
+# Style points by law and month
 TernaryPoints(Seatbelts[, seat], pch = beltLawPch,
               lwd = 2, # Use wider lines so points are clearer
               col = monthCol)
@@ -118,7 +108,7 @@ legend("topright", title = "Casualties / Mm", legend = sizes,
       pt.cex = sizes / 1000 * scale,
       pch = 1, lwd = 2, lty = NA)
 
-# Use our rowCol variable to style points
+# Style points according to casualties and the law
 TernaryPoints(Seatbelts[, seat], pch = 1, lwd = 2,
               cex = Seatbelts[, "DriversKilled"] / Seatbelts[, "kms"] * scale,
               col = 2 + Seatbelts[, "law"])
@@ -142,4 +132,13 @@ TernaryText(octBelts[, seat], paste0("'", 69:84),
             font = 2, cex = 1.5,
             # Semi-transparent colours
             col = adjustcolor(rowCol[oct], alpha.f = 0.8))
+
+# Provide a legend for our colour scheme
+PlotTools::SpectrumLegend(
+  "topright",
+  bty = "n",
+  palette = rowCol,
+  legend = seq(1984, 1969, length.out = 4),
+  title = "Year"
+)
 

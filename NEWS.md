@@ -1,3 +1,12 @@
+# Ternary v2.2.0
+- New function `Annotate()` annotates points on ternary plot.
+- New option `filled` to produce filled contour lines in `TernaryContour()`
+  ([#69](https://github.com/ms609/Ternary/issues/69)).
+- Improve clarity of point size plotting example.
+- Native colour bar support in `ColourTernary()`
+   ([#66](https://github.com/ms609/Ternary/issues/66)).
+- Require R 3.5 (due to dependency on "rlang").
+
 # Ternary v2.1.3
 - New [vignette](https://ms609.github.io/Ternary/articles/annotation.html)
   with annotation example ([#64](https://github.com/ms609/Ternary/issues/64)).

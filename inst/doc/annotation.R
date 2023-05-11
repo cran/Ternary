@@ -2,17 +2,29 @@
 set.seed(40) # For reproducibility
 
 nPoints <- 40
-points <- data.frame(a = abs(rnorm(nPoints, 2, 3)),
-                     b = abs(rnorm(nPoints, 1, 1.5)),
-                     c = abs(rnorm(nPoints, 1, 0.5)),
-                     col = sample(2:5, nPoints, replace = TRUE),
-                     label = paste("Point", seq_len(nPoints))
-                     )
+points <- data.frame(
+  a = abs(rnorm(nPoints, 2, 3)),
+  b = abs(rnorm(nPoints, 1, 1.5)),
+  c = abs(rnorm(nPoints, 1, 0.5)),
+  col = sample(2:5, nPoints, replace = TRUE),
+  label = paste("Point", seq_len(nPoints))
+)
 
 
-## ----plot---------------------------------------------------------------------
-library("Ternary")
+## ----auto-annotate------------------------------------------------------------
+library("Ternary") # Load the Ternary package
 
+# Create ternary plot
+par(mar = rep(0.2, 4)) # Set figure margins
+TernaryPlot("a", "b", "c")
+
+# Add points
+TernaryPoints(points[, 1:3], col = points[, "col"], pch = 16)
+
+# Add annotations automatically
+Annotate(points[, 1:3], col = points[, "col"])
+
+## ----manual-annotations-------------------------------------------------------
 # Create ternary plot
 par(mar = rep(0.2, 4)) # Set figure margins
 TernaryPlot("a", "b", "c")

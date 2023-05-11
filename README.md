@@ -4,13 +4,16 @@
 [![codecov](https://codecov.io/gh/ms609/Ternary/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ms609/Ternary)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version/Ternary)](https://cran.r-project.org/package=Ternary)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/Ternary)](https://cran.r-project.org/package=Ternary)
-[![DOI](https://zenodo.org/badge/111806977.svg)](https://zenodo.org/badge/latestdoi/111806977) [![Join the chat at https://gitter.im/TernaryPackage/community](https://badges.gitter.im/TernaryPackage/community.svg)](https://gitter.im/TernaryPackage/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![DOI](https://zenodo.org/badge/111806977.svg)](https://zenodo.org/badge/latestdoi/111806977)
 
 
 'Ternary' is an R package that allows the creation of ternary plots 
 (a.k.a. ternary graphs / simplex plots / Gibbs triangles / de Finetti diagrams) 
 and Holdridge life zone diagrams
 using the familiar functions of the default 'graphics' package.
+
+![Example ternary plot](https://user-images.githubusercontent.com/1695515/233467338-88a3b3a8-5580-4924-a11e-06dc8a38b3e9.png)
+
 
 For simple use cases, generate ternary plots using the point-and-click
 Shiny app:
@@ -52,5 +55,5 @@ The R package '[ggtern](https://CRAN.R-project.org/package=ggtern)'
 implements ternary plots within the 'ggplot2' framework.
 
 Please note that the 'Ternary' project is released with a
-[Contributor Code of Conduct](https://ms609.github.io/Ternary/CODE_OF_CONDUCT.html).
+[Contributor Code of Conduct](https://ms609.github.io/packages/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.

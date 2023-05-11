@@ -52,7 +52,7 @@ data_points <- list(
   I = c(92, 12, 243),
   V = c(225, 24, 208)
 )
-AddToTernary(points, data_points, pch = 21, cex = 2.8, 
+AddToTernary(graphics::points, data_points, pch = 21, cex = 2.8, 
              bg = vapply(data_points, 
                          function (x) rgb(x[1], x[2], x[3], 128,
                                           maxColorValue = 255),
@@ -101,43 +101,76 @@ TernaryLines(list(c(100, 0, 0), middle_triangle[3, ]), col = "grey")
 # Add an arrow
 TernaryArrows(c(20, 20, 60), c(30, 30, 40), length = 0.2, col = "darkblue")
 
-## ----complex-plot-------------------------------------------------------------
+## ----point-styling------------------------------------------------------------
+# Configure plotting area
 par(mar = rep(0.3, 4))
 
+# Example data object
 dat <- data.frame(sio2 = c(2, 4, 10, 20),
                   fe2o3 = c(5, 6, 7, 8),
                   al2o3 = c(12, 11, 10, 9),
                   grain_size = c(20, 16, 12, 8),
-                  reflectance = c(80, 63, 61, 20))
+                  reflectance = c(80, 63, 51, 20))
 
-spectrumBins <- 5
+# Define a colour spectrum
+spectrumBins <- 255 # Number of bins to use
 mySpectrum <- viridisLite::viridis(spectrumBins)
+
+# Cut our reflectance data into categories
 binnedReflectance <- cut(dat$reflectance, spectrumBins)
-dat_col <- mySpectrum[binnedReflectance]
 
-sizeBins <- 5
-mySizes <- seq(0.5, 2.4, length.out = sizeBins)
-binnedSize <- cut(dat$grain_size, sizeBins)
-dat_cex <- mySizes[binnedSize]
+# Assign each data point a colour from the spectrum
+pointCol <- mySpectrum[binnedReflectance]
 
+
+# Define a size range
+maxSize <- 2.4 # Size of largest point, in plotting units
+sizes <- dat$grain_size
+pointSize <- sizes * maxSize / max(sizes)
+
+# Initialize the plot
 TernaryPlot(atip = expression(SiO[2]),
             btip = expression(paste(Fe[2], O[3], " (wt%)")),
             ctip = expression(paste(Al[2], O[3]))
 )
 
+# Plot the points
 TernaryPoints(dat[, c("sio2", "fe2o3", "al2o3")],
-              cex = dat_cex,
-              col = dat_col,
-              pch = 16
+              cex = pointSize, # Point size
+              col = pointCol,  # Point colour
+              pch = 16         # Plotting symbol (16 = filled circle)
               )
 
-legend("topleft", col = dat_col, pch = 16,
-       legend = paste(binnedReflectance, "%"),
-       title = "Reflectance", bty = "n", cex = 0.8)
+# Legend for colour scale
+PlotTools::SpectrumLegend(
+  "topleft",
+  cex = 0.8, # Font size
+  palette = mySpectrum,
+  legend = paste(
+    seq(from = max(dat$reflectance), to = min(dat$reflectance),
+        length.out = 5),
+    "%"
+  ),
+  bty = "n", # No framing box
+  xpd = NA, # Don't clip at margins
+  # title.font = 2, # Bold. Supported from R 3.6 onwards
+  title = "Reflectance"
+)
 
-legend("topright", pt.cex = dat_cex, pch = 16,
-       legend = paste(binnedSize, "\u03bcm"),
-       title = "Grain size", bty = "n", cex = 0.8)
+# Legend for point size
+PlotTools::SizeLegend(
+  "topright",
+  width = c(0, maxSize),
+  lend = "round", # Round end of scale bar
+  legend = paste(
+    signif(seq(max(sizes), 0, length.out = 5), digits = 3),
+    "\u03bcm" # µm
+  ),
+  title = "Grain size",
+  # title.font = 2, # Bold. Supported from R 3.6 onwards
+  bty = "n", # Do not frame with box
+  cex = 0.8
+)
 
 ## ----cartesian----------------------------------------------------------------
 par(mar = rep(0, 4)) # Reduce margins
@@ -159,13 +192,19 @@ FunctionToContour <- function(a, b, c) {
   a - c + (4 * a * b) + (27 * a * b * c)
 }
 
-# Compute and plot colour tiles
-values <- TernaryPointValues(FunctionToContour, resolution = 24L)
-ColourTernary(values)
-
 # Add contour lines
-TernaryContour(FunctionToContour, resolution = 36L)
+values <- TernaryContour(FunctionToContour, resolution = 36L, filled = TRUE)
+zRange <- range(values$z, na.rm = TRUE)
 
+# Continuous legend for colour scale
+PlotTools::SpectrumLegend(
+  "topleft",
+  legend = round(seq(zRange[1], zRange[2], length.out = 4), 3),
+  palette = viridisLite::viridis(256L, alpha = 0.6),
+  bty = "n",    # No framing box
+  inset = 0.02,
+  xpd = NA      # Do not clip at edge of figure
+)
 
 ## ----density-contours---------------------------------------------------------
 par(mar = rep(0.2, 4))
