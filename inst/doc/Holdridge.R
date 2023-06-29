@@ -1,5 +1,5 @@
 ## ----hcl-colors-hack, echo=FALSE----------------------------------------------
-if (getRversion() < 3.6) {
+if (getRversion() < "3.6") {
   hcl.colors <- function(n, ...) {
     colorRampPalette(c("#4B0055", "#274983", "#008298", "#00B28A",
                          "#7ED357", "#FDE333"))(n)

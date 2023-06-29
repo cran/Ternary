@@ -11,7 +11,7 @@
 
 <meta name="author" content="Martin R. Smith" />
 
-<meta name="date" content="2023-05-11" />
+<meta name="date" content="2023-06-28" />
 
 <title>Holdridge plots</title>
 
@@ -352,7 +352,7 @@ display: none;
 
 <h1 class="title toc-ignore">Holdridge plots</h1>
 <h4 class="author">Martin R. Smith</h4>
-<h4 class="date">2023-05-11</h4>
+<h4 class="date">2023-06-28</h4>
 
 </div>
 
@@ -370,9 +370,16 @@ plotting functions.</p>
 plot interpretative lines and hexagons allowing plotted data to be
 linked to interpreted climate settings.</p>
 <pre class="r"><code># Load package and data
-library(&quot;Ternary&quot;)
-
-data(holdridge, holdridgeLifeZonesUp, package = &quot;Ternary&quot;)
+library(&quot;Ternary&quot;)</code></pre>
+<pre><code>## The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,
+## which was just loaded, will retire in October 2023.
+## Please refer to R-spatial evolution reports for details, especially
+## https://r-spatial.org/r/2023/05/15/evolution4.html.
+## It may be desirable to make the sf package available;
+## package maintainers should consider adding sf to Suggests:.
+## The sp package is now running under evolution status 2
+##      (status 2 uses the sf package in place of rgdal)</code></pre>
+<pre class="r"><code>data(holdridge, holdridgeLifeZonesUp, package = &quot;Ternary&quot;)
 
 # Suppress plot margins
 par(mar = c(0, 0, 0, 0))
