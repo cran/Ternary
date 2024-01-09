@@ -1,4 +1,4 @@
-## ----hcl-colors-hack, echo=FALSE----------------------------------------------
+## ----hcl-colors-hack, echo = FALSE--------------------------------------------
 if (getRversion() < "3.6") {
   hcl.colors <- function(n, ...) {
     colorRampPalette(c("#4B0055", "#274983", "#008298", "#00B28A",
@@ -6,7 +6,7 @@ if (getRversion() < "3.6") {
   }
 }
 
-## ----contours-by-calculation--------------------------------------------------
+## ----contours-by-calculation, fig.asp = 1-------------------------------------
 library("Ternary")
 par(mar = rep(0.2, 4))
 
@@ -18,10 +18,11 @@ values <- TernaryPointValues(FunctionToContour, resolution = 24L)
 TernaryPlot(alab = "a", blab = "b", clab = "c",
             # Place an opaque fill behind grid lines:
             panel.first = ColourTernary(values, spectrum = hcl.colors(256)))
-TernaryContour(FunctionToContour, resolution = 36L, legend = TRUE, bty = "n")
+TernaryContour(FunctionToContour, resolution = 36L, legend = TRUE, 
+               legend... = list(bty = "n"))
 
 
-## ----idw-interpolation--------------------------------------------------------
+## ----idw-interpolation, fig.asp = 1-------------------------------------------
 # If using your own data, set
 # abc <- [Three-column matrix containing a, b, c coordinates of points]
 # response <- [Vector of values at the points specified in abc]
@@ -75,12 +76,13 @@ ColourTernary(map)
 
 # Calculate contours
 PredictABC <- function(a, b, c) Predict(TernaryToXY(rbind(a, b, c)))
-TernaryContour(PredictABC, resolution = 36L, legend = 6, bty = "n")
+TernaryContour(PredictABC, resolution = 36L, legend = 6, 
+               legend... = list(bty = "n"))
 
 # Mark the points at which we took measurements
 TernaryPoints(abc, pch = 3, col = "#cc3333")
 
-## ----convex-hull, warning = FALSE---------------------------------------------
+## ----convex-hull, warning = FALSE, fig.asp = 1--------------------------------
 # Select some points at which to sample
 set.seed(0)
 nPts <- 50

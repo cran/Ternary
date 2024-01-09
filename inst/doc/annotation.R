@@ -11,7 +11,7 @@ points <- data.frame(
 )
 
 
-## ----auto-annotate------------------------------------------------------------
+## ----auto-annotate, fig.asp = 0.9---------------------------------------------
 library("Ternary") # Load the Ternary package
 
 # Create ternary plot
@@ -24,7 +24,7 @@ TernaryPoints(points[, 1:3], col = points[, "col"], pch = 16)
 # Add annotations automatically
 Annotate(points[, 1:3], col = points[, "col"])
 
-## ----manual-annotations-------------------------------------------------------
+## ----manual-annotations, fig.asp = 1------------------------------------------
 # Create ternary plot
 par(mar = rep(0.2, 4)) # Set figure margins
 TernaryPlot("a", "b", "c")

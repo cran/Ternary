@@ -1,4 +1,4 @@
-## ----hcl-colors-hack, echo=FALSE----------------------------------------------
+## ----hcl-colors-hack, echo = FALSE--------------------------------------------
 if (getRversion() < "3.6") {
   hcl.colors <- function(n, ...) {
     if (n == 4) {
@@ -40,8 +40,11 @@ beltLawPch <- ifelse(Seatbelts[, "law"], 3, 1)
 # Shrink the margin so the plot's easier to read
 par(mar = c(0, 0, 0, 0))
 
-# Set up a blank plot
-TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3])
+# Set up a blank plot, 
+TernaryPlot(
+  alab = seat[1], blab = seat[2], clab = seat[3],
+  region = Seatbelts[, seat]
+)
 
 # Add a legend
 legend("topleft", c("Belt law", "No law"), pch = c(3, 1))
@@ -56,7 +59,10 @@ rowCol <- hcl.colors(nPoints, palette = "viridis", alpha = 0.8)
 ## ----spectrum, fig.asp = 1----------------------------------------------------
 par(mar = c(0, 0, 0, 0))
 
-TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3])
+TernaryPlot(
+  alab = seat[1], blab = seat[2], clab = seat[3],
+  region = Seatbelts[, seat]
+)
 legend("topleft", c("Belt law", "No law"), pch = c(3, 1))
 
 # Add a legend for our colour scale
@@ -74,7 +80,10 @@ monthCol <- colorRampPalette(fourSeasons[c(1:4, 1)])(13)[c(7:12, 1:6)]
 
 par(mar = c(0, 0, 0, 0))
 
-TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3])
+TernaryPlot(
+  alab = seat[1], blab = seat[2], clab = seat[3],
+  region = Seatbelts[, seat]
+)
 legend("topleft", c("Belt law", "No law"), pch = c(3, 1))
 
 legendMonths <- seq(1, 12, by = 2)
@@ -93,7 +102,7 @@ TernaryPoints(Seatbelts[, seat], pch = beltLawPch,
               lwd = 2, # Use wider lines so points are clearer
               col = monthCol)
 
-## ----scale-by-deaths----------------------------------------------------------
+## ----scale-by-deaths, fig.asp = 1---------------------------------------------
 par(mar = c(0, 0, 0, 0))
 
 TernaryPlot(alab = seat[1], blab = seat[2], clab = seat[3],
@@ -113,7 +122,7 @@ TernaryPoints(Seatbelts[, seat], pch = 1, lwd = 2,
               cex = Seatbelts[, "DriversKilled"] / Seatbelts[, "kms"] * scale,
               col = 2 + Seatbelts[, "law"])
 
-## ----all-deaths---------------------------------------------------------------
+## ----all-deaths, fig.asp = 1--------------------------------------------------
 # Subset our data to extract only Octobers:
 oct <- month.name == "October"
 octBelts <- Seatbelts[oct, ]

@@ -8,6 +8,7 @@ TernaryContour(
   Func,
   resolution = 96L,
   direction = getOption("ternDirection", 1L),
+  region = getOption("ternRegion", ternRegionDefault),
   within = NULL,
   filled = FALSE,
   legend,
@@ -17,6 +18,7 @@ TernaryContour(
   zlim,
   color.palette = function(n) viridisLite::viridis(n, alpha = 0.6),
   fill.col = color.palette(length(levels) - 1),
+  func... = list(),
   ...
 )
 }
@@ -28,8 +30,15 @@ returns a numeric vector whose value at each coordinate will be depicted.}
 axis of the triangle.  Higher numbers will result in smaller subdivisions and smoother
 colour gradients, but at a computational cost.}
 
-\item{direction}{(optional) Integer specifying the direction that the current ternary plot
-should point: 1, up; 2, right; 3, down; 4, left.}
+\item{direction}{(optional) Integer specifying the direction that the
+current ternary plot should point: 1, up; 2, right; 3, down; 4, left.}
+
+\item{region}{(optional) Named list of length two specifying the the
+\code{min}imum and \code{max}imum values of each ternary axis to be drawn
+(e.g. \verb{list(min = c(40, 0, 0), max = c(100, 60, 60)});
+or a set of coordinates in a format accepted by \code{\link[=TernaryPoints]{TernaryPoints()}}.
+The plotted region will correspond to the smallest equilateral triangle
+that encompasses the specified ranges or coordinates.}
 
 \item{within}{List or matrix of \emph{x, y} coordinates within which contours
 should be evaluated, in any format supported by
@@ -57,6 +66,8 @@ Specify \code{TRUE} to generate automatically, or a single integer to generate
 \item{fill.col}{Sent as \code{col} parameter to
 \code{\link[graphics]{.filled.contour}()}.
 Computed from \code{color.palette} if not specified.}
+
+\item{func...}{List of additional parameters to send to \code{Func()}.}
 }
 \value{
 \code{TernaryContour()}  invisibly returns a list containing:
@@ -77,15 +88,17 @@ FunctionToContour <- function (a, b, c) {
 originalPar <- par(mar = rep(0, 4))
 TernaryPlot(alab = "a", blab = "b", clab = "c")
 values <- TernaryPointValues(FunctionToContour, resolution = 24L)
-ColourTernary(values,
+ColourTernary(
+  values,
   legend = signif(seq(max(values), min(values), length.out = 4), 2),
-   bty = "n")
+  bty = "n"
+)
 TernaryContour(FunctionToContour, resolution = 36L)
 
 # Note that FunctionToContour is sent a vector.
 # Instead of
 BadMax <- function (a, b, c) {
-  max(a, b, c) 
+  max(a, b, c)
 }
 
 # Use
@@ -103,7 +116,7 @@ GeneralMax <- function (a, b, c) {
 TernaryPlot(alab = "a", blab = "b", clab = "c")
 # Fill the contour areas, rather than using tiles
 TernaryContour(GeneralMax, filled = TRUE,
-               legend = c("Max", "Min"), bty = "n",
+               legend = c("Max", "...", "Min"), legend... = list(bty = "n"),
                fill.col = viridisLite::viridis(14, alpha = 0.6))
 # Re-draw edges of plot triangle over fill
 TernaryPolygon(diag(3))

@@ -7,12 +7,12 @@
 
 ## ----github-package, eval = FALSE---------------------------------------------
 #  if (!require("devtools")) install.packages("devtools")
-#  install_github("ms609/Ternary")
+#  install_github("ms609/Ternary", args = "--recursive")
 
 ## ----library-ternary----------------------------------------------------------
 library("Ternary")
 
-## ----create-blank-plot--------------------------------------------------------
+## ----create-blank-plot, fig.asp = 1-------------------------------------------
 TernaryPlot()
 
 ## ----create-simple-plot, fig.width = 7, fig.height = 7------------------------
@@ -25,7 +25,7 @@ for (dir in c("up", "right", "down", "le")) {
               col = cbPalette8[4], font = 2)
 }
 
-## ----two-stylised-plots-------------------------------------------------------
+## ----two-stylised-plots, fig.asp = 1/2----------------------------------------
 # Configure plotting area
 par(mfrow = c(1, 2), mar = rep(0.3, 4))
 
@@ -101,7 +101,7 @@ TernaryLines(list(c(100, 0, 0), middle_triangle[3, ]), col = "grey")
 # Add an arrow
 TernaryArrows(c(20, 20, 60), c(30, 30, 40), length = 0.2, col = "darkblue")
 
-## ----point-styling------------------------------------------------------------
+## ----point-styling, fig.asp = 1-----------------------------------------------
 # Configure plotting area
 par(mar = rep(0.3, 4))
 
@@ -172,7 +172,7 @@ PlotTools::SizeLegend(
   cex = 0.8
 )
 
-## ----cartesian----------------------------------------------------------------
+## ----cartesian, fig.asp = 1---------------------------------------------------
 par(mar = rep(0, 4)) # Reduce margins
 TernaryPlot(point = "right", clockwise = FALSE)
 cat("X range in this orientation:", TernaryXRange())
@@ -184,7 +184,7 @@ text(x = mean(c(0.5, sqrt(3) / 2)), y = 0.4, "Increasing X", pos = 3,
 text(x = 0.5, y = 0, "(0.5, 0)", col = cbPalette8[3])
 text(x = 0.8, y = -0.5, "(0.8, -0.5)", col = cbPalette8[3])
 
-## ----contours-----------------------------------------------------------------
+## ----contours, fig.asp = 1----------------------------------------------------
 par(mar = rep(0.2, 4))
 TernaryPlot(alab = "a", blab = "b", clab = "c")
 
@@ -206,7 +206,7 @@ PlotTools::SpectrumLegend(
   xpd = NA      # Do not clip at edge of figure
 )
 
-## ----density-contours---------------------------------------------------------
+## ----density-contours, fig.asp = 1--------------------------------------------
 par(mar = rep(0.2, 4))
 TernaryPlot(axis.labels = seq(0, 10, by = 1))
 
@@ -224,7 +224,7 @@ TernaryPoints(coordinates, col = "red", pch = ".")
 # Contour by point density
 TernaryDensityContour(coordinates, resolution = 30L)
 
-## ----low-resolution-density-contours, echo = FALSE----------------------------
+## ----low-resolution-density-contours, echo = FALSE, fig.asp = 1---------------
 coordinates <- list(middle = c(1, 1, 1),
                  top = c(3, 0, 0),
                  belowTop = c(2, 1, 1),
@@ -267,10 +267,17 @@ TernaryDensityContour(t(vapply(coordinates, I, double(3L))),
 
 
 ## ----find-corners-------------------------------------------------------------
+# Define points corresponding to corners of a region to plot
 my_corners <- list(c(22, 66, 12), c(22, 72, 6), c(15, 80, 5), c(12, 76, 12))
-lapply(my_corners, TernaryCoords, direction = 1)
 
-## ----close-up-----------------------------------------------------------------
+# Print Cartesian coordinates of points
+vapply(my_corners, TernaryCoords, direction = 1, FUN.VALUE = c(x = 0, y = 0))
+
+## ----close-up, fig.asp = 1----------------------------------------------------
+# Remove plot margins
+par(mar = rep(0, 4))
+
+# Create clipped plotting area
 TernaryPlot(xlim = c(0.28, 0.38), ylim = c(0.1, 0.2), padding = 0.04)
 
 # Annotate grid lines at user-specified points:
@@ -280,9 +287,9 @@ TernaryText(list(c(10, 69, 21), c(20, 64, 16)), c(10, 20), srt = 0, cex = 0.9,
             col = "darkgrey")
 
 # Plot desired polygon
-TernaryPolygon(my_corners, col = "#2cbe4e")
+TernaryPolygon(my_corners, col = "#2cbe4e88")
 
-# Show xlim, ylim and padding, using cartesian coordinates
+# Show xlim, ylim and padding, using Cartesian coordinates
 lines(c(0.28, 0.28, 0.38, 0.38, 0.28), c(0.1, 0.2, 0.2, 0.1, 0.1))
 text(0.28, 0.15, "xlim[1]", pos = 2, srt = 90)
 text(0.38, 0.15, "xlim[2]", pos = 4, srt = 90)
@@ -290,4 +297,18 @@ text(0.33, 0.1, "ylim[1]", pos = 1)
 text(0.33, 0.2, "ylim[2]", pos = 3)
 text(0.38, 0.1, "<padding>", pos = 4, cex = 0.75)
 text(0.38, 0.1, "<padding> ", pos = 2, cex = 0.75, srt = 90)
+
+## ----subregion-plot, fig.asp = 1----------------------------------------------
+TernaryPlot(region = my_corners) # Fit plotted region to data
+TernaryPolygon(my_corners, col = "#2cbe4e88")
+
+## ----manual-subregion, fig.asp = 1--------------------------------------------
+region <- list(
+   c(amin = 10, bmin = 70, cmin = 0),
+   c(amax = 30, bmax = 70, cmax = 10)
+)
+TernaryPlot(region = region)
+
+# Data will be plotted even if it falls outside the plotted axes
+TernaryPolygon(my_corners, col = "#2cbe4e88")
 
