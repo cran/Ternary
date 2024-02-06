@@ -1,5 +1,5 @@
 Package: Ternary
-Version: 2.3.0
+Version: 2.3.1
 Title: Create Ternary and Holdridge Plots
 Description: Plots ternary diagrams (simplex plots / Gibbs triangles) and
   Holdridge life zone plots <doi:10.1126/science.105.2727.367> using the
@@ -36,10 +36,10 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2024-01-09 11:57:21 UTC; pjjg18
+Packaged: 2024-02-06 11:33:22 UTC; pjjg18
 Author: Martin R. Smith [aut, cre, cph]
     (<https://orcid.org/0000-0001-5660-1727>),
   Lilian Sanselme [ctb]
 Maintainer: Martin R. Smith <martin.smith@durham.ac.uk>
 Repository: CRAN
-Date/Publication: 2024-01-09 18:10:06 UTC
+Date/Publication: 2024-02-06 12:30:03 UTC

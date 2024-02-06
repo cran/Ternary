@@ -1,3 +1,6 @@
+# Ternary v2.3.1 (2024-02-06)
+- Improve support for `region` parameter.
+
 # Ternary v2.3.0 (2024-01-08)
 - `region` parameter plots a sub-region of the ternary space.
 - Support `...`  in `TernaryContour(Func = function(...))`
