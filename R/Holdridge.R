@@ -29,14 +29,13 @@
 #' "Determination of world plant formations from simple climatic data",
 #' _Science_ 105:367&ndash;368. \doi{10.1126/science.105.2727.367}
 #'
-#' Holdridge (1967), _[Life zone ecology]_.
+#' Holdridge (1967), _Life zone ecology_.
 #' Tropical Science Center, San Jos&eacute;
 #' 
 #' Tsakalos, Smith, Luebert & Mucina (2023).
 #' "climenv: Download, extract and visualise climatic and elevation data.",
 #' _Journal of Vegetation Science_ 6:e13215. \doi{10.1111/jvs.13215}
 #'
-#' [Life zone ecology]: https://reddcr.go.cr/sites/default/files/centro-de-documentacion/holdridge_1966_-_life_zone_ecology.pdf
 #'
 #' @encoding UTF-8
 #' @examples

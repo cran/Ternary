@@ -14,7 +14,8 @@
 #'  Left or right-pointing arrows are produced by
 #'  typing `\\U2190` or `\\U2192`, or using `expression('value' %->% '')`.
 #' @param lab.offset Numeric specifying distance between midpoint of axis label
-#'  and the axis.
+#'  and the axis. The default value is given in the 'Usage' section; a value 
+#'  of `0` will position the axis label directly on the axis.
 #'  Increase `padding` if labels are being clipped.
 #'  Use a vector of length three to specify a different offset for each label.
 #'
@@ -50,7 +51,7 @@
 #' @param atip.rotate,btip.rotate,ctip.rotate Integer specifying number of
 #'  degrees to rotate label of rightmost apex.
 #' @param atip.pos,btip.pos,ctip.pos Integer specifying positioning of labels,
-#'  iff the corresponding `xlab.rotate` parameter is set.
+#'  iff the corresponding `xtip.rotate` parameter is set.
 #'
 #' @param isometric Logical specifying whether to enforce an equilateral shape
 #'  for the ternary plot.

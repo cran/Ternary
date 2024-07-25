@@ -7,9 +7,15 @@ if (getRversion() < "3.6") {
 }
 
 ## ----holdridge, fig.asp = 1---------------------------------------------------
-# Load package and data
+# Install the Ternary package, if it's not already installed
+if (!requireNamespace("Ternary", quietly = TRUE)) {
+  install.packages("Ternary")
+}
+
+# Load the Ternary package
 library("Ternary")
 
+# Load some example data from the Ternary package
 data(holdridge, holdridgeLifeZonesUp, package = "Ternary")
 
 # Suppress plot margins

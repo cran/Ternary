@@ -93,7 +93,8 @@ Left or right-pointing arrows are produced by
 typing \verb{\\\\U2190} or \verb{\\\\U2192}, or using \code{expression('value' \%->\% '')}.}
 
 \item{lab.offset}{Numeric specifying distance between midpoint of axis label
-and the axis.
+and the axis. The default value is given in the 'Usage' section; a value
+of \code{0} will position the axis label directly on the axis.
 Increase \code{padding} if labels are being clipped.
 Use a vector of length three to specify a different offset for each label.}
 
@@ -135,7 +136,7 @@ other limit.}
 degrees to rotate label of rightmost apex.}
 
 \item{atip.pos, btip.pos, ctip.pos}{Integer specifying positioning of labels,
-iff the corresponding \code{xlab.rotate} parameter is set.}
+iff the corresponding \code{xtip.rotate} parameter is set.}
 
 \item{padding}{Numeric specifying size of internal margin of the plot;
 increase if axis labels are being clipped.}
@@ -268,7 +269,7 @@ Holdridge (1947),
 "Determination of world plant formations from simple climatic data",
 \emph{Science} 105:367–368. \doi{10.1126/science.105.2727.367}
 
-Holdridge (1967), \emph{\href{https://reddcr.go.cr/sites/default/files/centro-de-documentacion/holdridge_1966_-_life_zone_ecology.pdf}{Life zone ecology}}.
+Holdridge (1967), \emph{Life zone ecology}.
 Tropical Science Center, San José
 
 Tsakalos, Smith, Luebert & Mucina (2023).
@@ -279,8 +280,8 @@ Tsakalos, Smith, Luebert & Mucina (2023).
 Other Holdridge plotting functions: 
 \code{\link{AddToHoldridge}()},
 \code{\link{HoldridgeHypsometricCol}()},
-\code{\link{holdridgeClasses}},
-\code{\link{holdridge}}
+\code{\link{holdridge}},
+\code{\link{holdridgeClasses}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
