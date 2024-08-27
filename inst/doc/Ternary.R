@@ -114,7 +114,7 @@ dat <- data.frame(sio2 = c(2, 4, 10, 20),
 
 # Define a colour spectrum
 spectrumBins <- 255 # Number of bins to use
-mySpectrum <- viridisLite::viridis(spectrumBins)
+mySpectrum <- rowCol <- hcl.colors(spectrumBins, palette = "viridis")
 
 # Cut our reflectance data into categories
 binnedReflectance <- cut(dat$reflectance, spectrumBins)
@@ -153,7 +153,7 @@ PlotTools::SpectrumLegend(
   ),
   bty = "n", # No framing box
   xpd = NA, # Don't clip at margins
-  # title.font = 2, # Bold. Supported from R 3.6 onwards
+  # title.font = 2, # Bold.  Argument only available in R>3.6
   title = "Reflectance"
 )
 
@@ -167,7 +167,7 @@ PlotTools::SizeLegend(
     "\u03bcm" # µm
   ),
   title = "Grain size",
-  # title.font = 2, # Bold. Supported from R 3.6 onwards
+  # title.font = 2, # Bold. Argument only available in R>3.6
   bty = "n", # Do not frame with box
   cex = 0.8
 )
@@ -200,7 +200,7 @@ zRange <- range(values$z, na.rm = TRUE)
 PlotTools::SpectrumLegend(
   "topleft",
   legend = round(seq(zRange[1], zRange[2], length.out = 4), 3),
-  palette = viridisLite::viridis(256L, alpha = 0.6),
+  palette = hcl.colors(265, palette = "viridis", alpha = 0.6),
   bty = "n",    # No framing box
   inset = 0.02,
   xpd = NA      # Do not clip at edge of figure

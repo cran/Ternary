@@ -1,11 +1,3 @@
-## ----hcl-colors-hack, echo = FALSE--------------------------------------------
-if (getRversion() < "3.6") {
-  hcl.colors <- function(n, ...) {
-    colorRampPalette(c("#4B0055", "#274983", "#008298", "#00B28A",
-                         "#7ED357", "#FDE333"))(n)
-  }
-}
-
 ## ----contours-by-calculation, fig.asp = 1-------------------------------------
 library("Ternary")
 par(mar = rep(0.2, 4))

@@ -1,3 +1,8 @@
+# Ternary v2.3.3 (2024-08-27)
+- Support plotting of `c(0, 0, 0)`, at origin.
+- Require R 3.6.
+- Remove 'viridis' dependency.
+
 # Ternary v2.3.2 (2024-07-25)
 - Document reading data into R in vignette for new users.
 - Provide package anchors in documentation pages.

@@ -1,15 +1,3 @@
-## ----hcl-colors-hack, echo = FALSE--------------------------------------------
-if (getRversion() < "3.6") {
-  hcl.colors <- function(n, ...) {
-    if (n == 4) {
-      return(c("#A71B4B", "#F9C25C", "#81DEAD", "#584B9F"))
-    } else {
-      colorRampPalette(c("#4B0055", "#274983", "#008298", "#00B28A",
-                         "#7ED357", "#FDE333"))(n)
-    }
-  }
-}
-
 ## ----load-data----------------------------------------------------------------
 data("Seatbelts")
 
