@@ -3,7 +3,7 @@
 #' Create and style a blank ternary plot.
 #'
 #' The plot will be generated using the standard 'graphics' plot functions, on
-#' which additional elements can be added using cartesian coordinates, perhaps
+#' which additional elements can be added using Cartesian coordinates, perhaps
 #' using functions such as \code{\link[graphics]{arrows}},
 #' \code{\link[graphics]{legend}} or \code{\link[graphics]{text}}.
 #'
@@ -125,6 +125,8 @@
 #' @param \dots Additional parameters to \code{\link[graphics]{plot}}.
 #'
 #' @seealso
+#'  - Detailed usage examples are available in the [package vignette](
+#'      https://ms609.github.io/Ternary/articles/Ternary.html)
 #'  - [`AddToTernary()`]: Add elements to a ternary plot
 #'  - [`TernaryCoords()`]: Convert ternary coordinates to Cartesian
 #'    (_x_ and _y_) coordinates
@@ -349,7 +351,8 @@ HorizontalGrid <- function(grid.lines = 10, grid.col = "grey",
 #' TernaryLines(coords, col = "darkgreen")
 #' TernaryArrows(coords[1], coords[2:4], col = "orange", length = 0.2, lwd = 1)
 #' TernaryText(coords, cex = 0.8, col = "red", font = 2)
-#' TernaryPoints(coords, pch = 1, cex = 2, col = "blue")
+#' seeThruBlue <- rgb(0, 0.2, 1, alpha = 0.8)
+#' TernaryPoints(coords, pch = 1, cex = 2, col = seeThruBlue)
 #' AddToTernary(graphics::points, coords, pch = 1, cex = 3)
 #'
 #' # An equivalent syntax applies to Holdridge plots:
@@ -362,6 +365,7 @@ HorizontalGrid <- function(grid.lines = 10, grid.col = "grey",
 #' # Restore original plotting parameters
 #' par(oPar)
 #' @template MRS
+#' @order 1
 #' @export
 AddToTernary <- function(PlottingFunction, coordinates, ...) {
   xy <- CoordinatesToXY(coordinates)
@@ -405,20 +409,9 @@ CoordinatesToXY <- function(coordinates) {
   }
 }
 
-#' @describeIn AddToTernary Add \link[graphics]{segments}
-#' @importFrom graphics segments
-#' @export
-TernarySegments <- function(fromCoordinates, toCoordinates = fromCoordinates,
-                            ...) {
-  fromXY <- CoordinatesToXY(fromCoordinates)
-  toXY <- CoordinatesToXY(toCoordinates)
-
-  # Return:
-  segments(fromXY[1L, ], fromXY[2L, ], toXY[1L, ], toXY[2L, ], ...)
-}
-
 #' @describeIn AddToTernary Add  \link[graphics]{arrows}
 #' @importFrom graphics arrows
+#' @order 3
 #' @export
 TernaryArrows <- function(fromCoordinates, toCoordinates = fromCoordinates,
                           ...) {
@@ -431,6 +424,7 @@ TernaryArrows <- function(fromCoordinates, toCoordinates = fromCoordinates,
 
 #' @describeIn AddToTernary Add \link[graphics]{lines}
 #' @importFrom graphics lines
+#' @order 3
 #' @export
 TernaryLines <- function(coordinates, ...) {
   AddToTernary(lines, coordinates, ...)
@@ -438,6 +432,7 @@ TernaryLines <- function(coordinates, ...) {
 
 #' @describeIn AddToTernary Add \link[graphics]{points}
 #' @importFrom graphics points
+#' @order 3
 #' @export
 TernaryPoints <- function(coordinates, ...) {
   AddToTernary(points, coordinates, ...)
@@ -445,13 +440,28 @@ TernaryPoints <- function(coordinates, ...) {
 
 #' @describeIn AddToTernary Add \link[graphics:polygon]{polygons}
 #' @importFrom graphics polygon
+#' @order 3
 #' @export
 TernaryPolygon <- function(coordinates, ...) {
   AddToTernary(polygon, coordinates, ...)
 }
 
+#' @describeIn AddToTernary Add \link[graphics]{segments}
+#' @importFrom graphics segments
+#' @order 3
+#' @export
+TernarySegments <- function(fromCoordinates, toCoordinates = fromCoordinates,
+                            ...) {
+  fromXY <- CoordinatesToXY(fromCoordinates)
+  toXY <- CoordinatesToXY(toCoordinates)
+  
+  # Return:
+  segments(fromXY[1L, ], fromXY[2L, ], toXY[1L, ], toXY[2L, ], ...)
+}
+
 #' @describeIn AddToTernary Add \link[graphics]{text}
 #' @importFrom graphics text
+#' @order 3
 #' @export
 TernaryText <- function(coordinates, ...) {
   AddToTernary(text, coordinates, ...)
@@ -459,6 +469,7 @@ TernaryText <- function(coordinates, ...) {
 
 #' @describeIn AddToTernary Add points, joined by lines
 #' @importFrom graphics lines points
+#' @order 5
 #' @export
 JoinTheDots <- function(coordinates, ...) {
   AddToTernary(points, coordinates, ...)

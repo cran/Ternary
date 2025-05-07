@@ -1,12 +1,17 @@
-#' Value of a function at regularly spaced points
+#' Evaluate function over a grid
 #'
 #' Intended to facilitate coloured contour plots with [`ColourTernary()`],
 #' `TernaryPointValue()` evaluates a function at points on a triangular grid;
 #' `TernaryDensity()` calculates the density of points in each grid cell.
 #'
 #'
-#' @template FuncParam
-#' @template resolutionParam
+#' @param Func Function that takes three arguments named `a`, `b` and `c`, and
+#' returns a numeric vector of length _n_.
+#' `a`, `b` and `c` will each be a vector of length _n_. Together, they
+#' specify the series of coordinates at which the function should be evaluated.
+#' @param resolution The number of triangles whose base should lie on the longest 
+#' axis of the triangle.  Higher numbers will result in smaller subdivisions and smoother
+#' colour gradients, but at a computational cost.
 #' @template directionParam
 #' @param \dots Additional parameters to `Func()`.
 #' @return `TernaryPointValues()` returns a matrix whose rows correspond to:
@@ -64,7 +69,7 @@ TernaryPointValues <- function(Func,
 #' Calculate _x_ and _y_ coordinates of the midpoints of triangles
 #' tiled to cover a ternary plot.
 #'
-#' @template resolutionParam
+#' @inheritParams TernaryPointValues
 #' @template directionParam
 #'
 #' @return `TriangleCentres()` returns a matrix with three named rows:
@@ -446,15 +451,16 @@ TernaryRightTiles <- function(x, y, resolution, col) {
 #' Paint tiles on ternary plot
 #'
 #' Function to fill a ternary plot with coloured tiles.  Useful in combination with
-#' [`TernaryPointValues`] and [`TernaryContour`].
+#' [`TernaryPointValues()`] and [`TernaryContour()`].
 #'
 #' @aliases TernaryUpTiles TernaryDownTiles TernaryLeftTiles TernaryRightTiles
 #' @param x,y Numeric vectors specifying _x_ and _y_ coordinates of centres of each triangle.
 #' @param down Logical vector specifying `TRUE` if each triangle should point
 #' down (or right), `FALSE` otherwise.
-#' @template resolutionParam
+#' @inheritParams TernaryPointValues
 #' @param col Vector specifying the colour with which to fill each triangle.
-#' @template directionParam
+#' @return `TernaryTiles()` is called for its side effect – painting a ternary
+#' plot with coloured tiles.  It invisibly returns `NULL`.
 #'
 #' @examples
 #' TernaryPlot()
@@ -482,46 +488,52 @@ TernaryTiles <- function(x, y, down, resolution, col,
   invisible()
 }
 
-
-#' Colour a ternary plot according to the output of a function
+#' Colour ternary plot
+#' 
+#' Colour a ternary plot according to the output of a function.
 #'
 #' @param values Numeric matrix, possibly created using
 #' [`TernaryPointValues()`], with four named rows:
-#' `x`, `y`, cartesian coordinates of each triangle centre;
+#' `x`, `y`, Cartesian coordinates of each triangle centre;
 #' `z`, value associated with that coordinate;
 #' `down`, triangle direction: `0` = point upwards; `1` = point downwards.
 #' @param spectrum Vector of colours to use as a spectrum, or `NULL` to use
 #' `values["z", ]`.
-#' @template resolutionParam
-#' @template directionParam
+#' @inheritParams TernaryPointValues
 #' @template legendParam
 #' @param \dots Further arguments to
 #' [`SpectrumLegend()`][PlotTools::SpectrumLegend].
+#' @return `ColourTernary()` is called for its side effect – colouring a ternary
+#' plot according to `values`.  It invisibly returns `NULL`.
 #'
 #' @template MRS
 #'
 #' @examples
-#' TernaryPlot(alab = "a", blab = "b", clab = "c")
+#' # Depict a function across a ternary plot with colour and contours
+#'
+#' TernaryPlot(alab = "a", blab = "b", clab = "c") # Blank plot
 #'
 #' FunctionToContour <- function (a, b, c) {
 #'   a - c + (4 * a * b) + (27 * a * b * c)
 #' }
 #'
+#' # Evaluate function
 #' values <- TernaryPointValues(FunctionToContour, resolution = 24L)
+#' 
+#' # Use the value of the function to determine the brightness of the plot
 #' ColourTernary(
 #'   values,
 #'   x = "topleft",
 #'   bty = "n", # No box
 #'   legend = signif(seq(max(values), min(values), length.out = 4), 3)
 #' )
+#' 
+#' # Overlay contours
 #' TernaryContour(FunctionToContour, resolution = 36L)
 #'
-#'
-#' TernaryPlot()
-#' values <- TernaryPointValues(rgb, resolution = 20)
-#' ColourTernary(values, spectrum = NULL)
-#'
-#' # Create a helper function to place white centrally:
+#' # Directly specify the colour with the output of a function
+#' 
+#' # Create a function that returns a vector of rgb strings:
 #' rgbWhite <- function (r, g, b) {
 #'   highest <- apply(rbind(r, g, b), 2L, max)
 #'   rgb(r/highest, g/highest, b/highest)
@@ -601,9 +613,8 @@ ColorTernary <- ColourTernary
 #'
 #' Draws contour lines to depict the value of a function in ternary space.
 #'
-#' @template FuncParam
-#' @template resolutionParam
 #' @inheritParams TernaryPlot
+#' @inheritParams TernaryPointValues
 #' @template dotsToContour
 #' @template legendParam
 #' @param legend... List of additional parameters to send to
@@ -615,7 +626,10 @@ ColorTernary <- ColourTernary
 #' If `NULL`, defaults to a region slightly smaller than the ternary plot.
 #' The `$hull` entry generated by `TriangleInHull()` may also be used.
 #'
-#' @return `TernaryContour()`  invisibly returns a list containing:
+#' @return `TernaryContour()` is called for its side effect – adding contours
+#' to a Ternary plot according to the value of `Func(a, b, c)` at each 
+#' coordinate.
+#' It invisibly returns a list containing:
 #' - `x`,`y`: the Cartesian coordinates of each evaluated point;
 #' - `z`: The value of `Func()` at each coordinate.
 #'
@@ -637,28 +651,35 @@ ColorTernary <- ColourTernary
 #' )
 #' TernaryContour(FunctionToContour, resolution = 36L)
 #'
-#' # Note that FunctionToContour is sent a vector.
+#' # Note that FunctionToContour() is sent vectors of all values of a, b and
+#' # c at which it will be evaluated.
 #' # Instead of
 #' BadMax <- function (a, b, c) {
-#'   max(a, b, c)
+#'   max(a, b, c) # Not vectorized
+#'   # Will return the single maximum of ALL a, b and c coordinates
 #' }
 #'
 #' # Use
 #' GoodMax <- function (a, b, c) {
-#'   pmax(a, b, c)
+#'   pmax(a, b, c) # Vectorized
+#'   # Will return the maximum of each trio of a, b and c coordinates
 #' }
 #' TernaryPlot(alab = "a", blab = "b", clab = "c")
 #' ColourTernary(TernaryPointValues(GoodMax))
 #' TernaryContour(GoodMax)
 #'
-#' # Or, for a generalizable example,
+#' # When a vectorized version of a function is not available, you will need to
+#' # apply the function to each combination of a, b and c in turn:
 #' GeneralMax <- function (a, b, c) {
-#'   apply(rbind(a, b, c), 2, max)
+#'   abc.matrix <- rbind(a, b, c) # Matrix where each column gives an a,b,c trio
+#'   apply(abc.matrix, 2, max)    # Apply non-vectorized function to each trio
+#'   # Returns a vector with the maximum value of a,b,c at each coordinate.
 #' }
 #' TernaryPlot(alab = "a", blab = "b", clab = "c")
 #' # Fill the contour areas, rather than using tiles
 #' TernaryContour(GeneralMax, filled = TRUE,
-#'                legend = c("Max", "...", "Min"), legend... = list(bty = "n"),
+#'                legend = c("Max", "...", "Min"),
+#'                legend... = list(bty = "n", xpd = NA), # Tweak legend display
 #'                fill.col =  hcl.colors(14, palette = "viridis", alpha = 0.6))
 #' # Re-draw edges of plot triangle over fill
 #' TernaryPolygon(diag(3))
@@ -772,7 +793,7 @@ TernaryContour <- function(
 #' @param bandwidth Vector of bandwidths for x and y directions.
 #' Defaults to normal reference bandwidth (see `MASS::bandwidth.nrd`).
 #' A scalar value will be taken to apply to both directions.
-#' @template resolutionParam
+#' @inheritParams TernaryContour
 #' @param tolerance Numeric specifying how close to the margins the contours
 #' should be plotted, as a fraction of the size of the triangle.
 #' Negative values will cause contour lines to extend beyond the margins of the
@@ -805,6 +826,51 @@ TernaryContour <- function(
 #'
 #' # Contour by density
 #' TernaryDensityContour(coordinates, resolution = 30L)
+#'
+#' # The following demonstrates the behaviour of the density estimates when 
+#' # points fall on boundaries of the triangular grid cells; text denotes the
+#' # number of points within the cell, with cells straddling _n_ cells
+#' # contributing 1/_n_ of a point to each cell straddled.
+#'
+#' coordinates <- list(middle = c(1, 1, 1),
+#'                     top = c(3, 0, 0),
+#'                     belowTop = c(2, 1, 1),
+#'                     leftSideSolid = c(9, 2, 9),
+#'                     leftSideSolid2 = c(9.5, 2, 8.5),
+#'                     right3way = c(1, 2, 0),
+#'                     rightEdge = c(2.5, 0.5, 0),
+#'                     leftBorder = c(1, 1, 4),
+#'                     topBorder = c(2, 1, 3),
+#'                     rightBorder = c(1, 2, 3)
+#' )
+#' par(mfrow = c(2, 2), mar = rep(0.2, 4))
+#' TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "up")
+#' values <- TernaryDensity(coordinates, resolution = 3L)
+#' ColourTernary(values)
+#' TernaryPoints(coordinates, col = "red")
+#' text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
+#' 
+#' TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "right")
+#' values <- TernaryDensity(coordinates, resolution = 3L)
+#' ColourTernary(values)
+#' TernaryPoints(coordinates, col = "red")
+#' text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
+#' 
+#' TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "down")
+#' values <- TernaryDensity(coordinates, resolution = 3L)
+#' ColourTernary(values)
+#' TernaryPoints(coordinates, col = "red")
+#' text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
+#' 
+#' TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "left")
+#' values <- TernaryDensity(coordinates, resolution = 3L)
+#' ColourTernary(values)
+#' TernaryPoints(coordinates, col = "red")
+#' text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
+#' 
+#' TernaryDensityContour(t(vapply(coordinates, I, double(3L))),
+#'                       resolution = 24L, tolerance = -0.02, col = "orange")
+#' 
 #'
 #' # Reset plotting parameters
 #' par(oPar)

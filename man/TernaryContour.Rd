@@ -23,8 +23,10 @@ TernaryContour(
 )
 }
 \arguments{
-\item{Func}{Function taking vectors of coordinates \code{a}, \code{b} and \code{c}, which
-returns a numeric vector whose value at each coordinate will be depicted.}
+\item{Func}{Function that takes three arguments named \code{a}, \code{b} and \code{c}, and
+returns a numeric vector of length \emph{n}.
+\code{a}, \code{b} and \code{c} will each be a vector of length \emph{n}. Together, they
+specify the series of coordinates at which the function should be evaluated.}
 
 \item{resolution}{The number of triangles whose base should lie on the longest
 axis of the triangle.  Higher numbers will result in smaller subdivisions and smoother
@@ -70,7 +72,10 @@ Computed from \code{color.palette} if not specified.}
 \item{func...}{List of additional parameters to send to \code{Func()}.}
 }
 \value{
-\code{TernaryContour()}  invisibly returns a list containing:
+\code{TernaryContour()} is called for its side effect – adding contours
+to a Ternary plot according to the value of \code{Func(a, b, c)} at each
+coordinate.
+It invisibly returns a list containing:
 \itemize{
 \item \code{x},\code{y}: the Cartesian coordinates of each evaluated point;
 \item \code{z}: The value of \code{Func()} at each coordinate.
@@ -95,28 +100,35 @@ ColourTernary(
 )
 TernaryContour(FunctionToContour, resolution = 36L)
 
-# Note that FunctionToContour is sent a vector.
+# Note that FunctionToContour() is sent vectors of all values of a, b and
+# c at which it will be evaluated.
 # Instead of
 BadMax <- function (a, b, c) {
-  max(a, b, c)
+  max(a, b, c) # Not vectorized
+  # Will return the single maximum of ALL a, b and c coordinates
 }
 
 # Use
 GoodMax <- function (a, b, c) {
-  pmax(a, b, c)
+  pmax(a, b, c) # Vectorized
+  # Will return the maximum of each trio of a, b and c coordinates
 }
 TernaryPlot(alab = "a", blab = "b", clab = "c")
 ColourTernary(TernaryPointValues(GoodMax))
 TernaryContour(GoodMax)
 
-# Or, for a generalizable example,
+# When a vectorized version of a function is not available, you will need to
+# apply the function to each combination of a, b and c in turn:
 GeneralMax <- function (a, b, c) {
-  apply(rbind(a, b, c), 2, max)
+  abc.matrix <- rbind(a, b, c) # Matrix where each column gives an a,b,c trio
+  apply(abc.matrix, 2, max)    # Apply non-vectorized function to each trio
+  # Returns a vector with the maximum value of a,b,c at each coordinate.
 }
 TernaryPlot(alab = "a", blab = "b", clab = "c")
 # Fill the contour areas, rather than using tiles
 TernaryContour(GeneralMax, filled = TRUE,
-               legend = c("Max", "...", "Min"), legend... = list(bty = "n"),
+               legend = c("Max", "...", "Min"),
+               legend... = list(bty = "n", xpd = NA), # Tweak legend display
                fill.col =  hcl.colors(14, palette = "viridis", alpha = 0.6))
 # Re-draw edges of plot triangle over fill
 TernaryPolygon(diag(3))

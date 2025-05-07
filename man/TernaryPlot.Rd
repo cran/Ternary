@@ -215,7 +215,7 @@ Create and style a blank ternary plot.
 }
 \details{
 The plot will be generated using the standard 'graphics' plot functions, on
-which additional elements can be added using cartesian coordinates, perhaps
+which additional elements can be added using Cartesian coordinates, perhaps
 using functions such as \code{\link[graphics]{arrows}},
 \code{\link[graphics]{legend}} or \code{\link[graphics]{text}}.
 }
@@ -234,6 +234,7 @@ HorizontalGrid(grid.lines = 2, grid.col = "blue", grid.lty = 1)
 }
 \seealso{
 \itemize{
+\item Detailed usage examples are available in the \href{https://ms609.github.io/Ternary/articles/Ternary.html}{package vignette}
 \item \code{\link[=AddToTernary]{AddToTernary()}}: Add elements to a ternary plot
 \item \code{\link[=TernaryCoords]{TernaryCoords()}}: Convert ternary coordinates to Cartesian
 (\emph{x} and \emph{y}) coordinates

@@ -3,7 +3,7 @@
 \name{TernaryPointValues}
 \alias{TernaryPointValues}
 \alias{TernaryDensity}
-\title{Value of a function at regularly spaced points}
+\title{Evaluate function over a grid}
 \usage{
 TernaryPointValues(
   Func,
@@ -19,8 +19,10 @@ TernaryDensity(
 )
 }
 \arguments{
-\item{Func}{Function taking vectors of coordinates \code{a}, \code{b} and \code{c}, which
-returns a numeric vector whose value at each coordinate will be depicted.}
+\item{Func}{Function that takes three arguments named \code{a}, \code{b} and \code{c}, and
+returns a numeric vector of length \emph{n}.
+\code{a}, \code{b} and \code{c} will each be a vector of length \emph{n}. Together, they
+specify the series of coordinates at which the function should be evaluated.}
 
 \item{resolution}{The number of triangles whose base should lie on the longest
 axis of the triangle.  Higher numbers will result in smaller subdivisions and smoother

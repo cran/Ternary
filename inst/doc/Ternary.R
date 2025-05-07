@@ -1,18 +1,18 @@
 ## ----shiny-app, eval = FALSE--------------------------------------------------
-#  install.packages("Ternary")
-#  Ternary::TernaryApp()
+# install.packages("Ternary")
+# Ternary::TernaryApp()
 
 ## ----install-package, eval = FALSE--------------------------------------------
-#  install.packages("Ternary")
+# install.packages("Ternary")
 
 ## ----github-package, eval = FALSE---------------------------------------------
-#  if (!require("devtools")) install.packages("devtools")
-#  install_github("ms609/Ternary", args = "--recursive")
+# if (!require("devtools")) install.packages("devtools")
+# install_github("ms609/Ternary", args = "--recursive")
 
 ## ----library-ternary----------------------------------------------------------
 library("Ternary")
 
-## ----create-blank-plot, fig.asp = 1-------------------------------------------
+## ----create-blank-plot, fig.asp = 1, fig.width = 5----------------------------
 TernaryPlot()
 
 ## ----create-simple-plot, fig.width = 7, fig.height = 7------------------------
@@ -25,9 +25,33 @@ for (dir in c("up", "right", "down", "le")) {
               col = cbPalette8[4], font = 2)
 }
 
+## ----setup-stylized-plots-----------------------------------------------------
+# Define data points
+data_points <- list(
+  R = c(255, 0, 0), 
+  O = c(240, 180, 52),
+  Y = c(210, 222, 102),
+  G = c(111, 222, 16),
+  B = c(25, 160, 243),
+  I = c(92, 12, 243),
+  V = c(225, 24, 208)
+)
+
+# Compute RGB colours based on point values
+PointColour <- function(x) {
+  rgb(x[1], x[2], x[3], maxColorValue = 255, # Use point values for RGB
+      alpha = 128 # Semitransparency
+      )
+}
+
+# Precompute the colour for each point
+data_col <- sapply(data_points, PointColour)
+
 ## ----two-stylised-plots, fig.asp = 1/2----------------------------------------
-# Configure plotting area
-par(mfrow = c(1, 2), mar = c(0.3, 0.3, 1.3, 0.3))
+par(                          # Configure plotting area
+  mfrow = c(1, 2),            # Plot one row of panels in two columns
+  mar = c(0.3, 0.3, 1.3, 0.3) # Set margins for each plot
+)
 
 # Initial plot
 TernaryPlot(alab = "Redder \u2192", blab = "\u2190 Greener", clab = "Bluer \u2192",
@@ -38,26 +62,13 @@ TernaryPlot(alab = "Redder \u2192", blab = "\u2190 Greener", clab = "Bluer \u219
             axis.col = rgb(0.6, 0.6, 0.6), ticks.col = rgb(0.6, 0.6, 0.6),
             axis.rotate = FALSE,
             padding = 0.08)
+
 # Colour the background:
 cols <- TernaryPointValues(rgb)
 ColourTernary(cols, spectrum = NULL)
 
-# Add data points
-data_points <- list(
-  R = c(255, 0, 0), 
-  O = c(240, 180, 52),
-  Y = c(210, 222, 102),
-  G = c(111, 222, 16),
-  B = c(25, 160, 243),
-  I = c(92, 12, 243),
-  V = c(225, 24, 208)
-)
-AddToTernary(graphics::points, data_points, pch = 21, cex = 2.8, 
-             bg = vapply(data_points, 
-                         function (x) rgb(x[1], x[2], x[3], 128,
-                                          maxColorValue = 255),
-                         character(1))
-             )
+# Add the data to the plot
+AddToTernary(graphics::points, data_points, pch = 21, cex = 2.8, bg = data_col)
 AddToTernary(text, data_points, names(data_points), cex = 0.8, font = 2)
 legend("bottomright", 
        legend = c("Red", "Orange", "Yellow", "Green"),
@@ -101,7 +112,7 @@ TernaryLines(list(c(100, 0, 0), middle_triangle[3, ]), col = "grey")
 # Add an arrow
 TernaryArrows(c(20, 20, 60), c(30, 30, 40), length = 0.2, col = "darkblue")
 
-## ----point-styling, fig.asp = 1-----------------------------------------------
+## ----point-styling, fig.asp = 1, fig.width = 3.5------------------------------
 # Configure plotting area
 par(mar = rep(0.3, 4))
 
@@ -172,7 +183,7 @@ PlotTools::SizeLegend(
   cex = 0.8
 )
 
-## ----cartesian, fig.asp = 1---------------------------------------------------
+## ----cartesian, fig.asp = 1, fig.width = 3.5----------------------------------
 par(mar = rep(0, 4)) # Reduce margins
 TernaryPlot(point = "right", clockwise = FALSE)
 cat("X range in this orientation:", TernaryXRange())
@@ -184,7 +195,7 @@ text(x = mean(c(0.5, sqrt(3) / 2)), y = 0.4, "Increasing X", pos = 3,
 text(x = 0.5, y = 0, "(0.5, 0)", col = cbPalette8[3])
 text(x = 0.8, y = -0.5, "(0.8, -0.5)", col = cbPalette8[3])
 
-## ----contours, fig.asp = 1----------------------------------------------------
+## ----contours, fig.asp = 1, fig.width = 3.5-----------------------------------
 par(mar = rep(0.2, 4))
 TernaryPlot(alab = "a", blab = "b", clab = "c")
 
@@ -206,7 +217,7 @@ PlotTools::SpectrumLegend(
   xpd = NA      # Do not clip at edge of figure
 )
 
-## ----density-contours, fig.asp = 1--------------------------------------------
+## ----density-contours, fig.asp = 1, fig.width = 3.5---------------------------
 par(mar = rep(0.2, 4))
 TernaryPlot(axis.labels = seq(0, 10, by = 1))
 
@@ -224,48 +235,6 @@ TernaryPoints(coordinates, col = "red", pch = ".")
 # Contour by point density
 TernaryDensityContour(coordinates, resolution = 30L)
 
-## ----low-resolution-density-contours, echo = FALSE, fig.asp = 1---------------
-coordinates <- list(middle = c(1, 1, 1),
-                 top = c(3, 0, 0),
-                 belowTop = c(2, 1, 1),
-                 leftSideSolid = c(9, 2, 9),
-                 leftSideSolid2 = c(9.5, 2, 8.5),
-                 right3way = c(1, 2, 0),
-                 rightEdge = c(2.5, 0.5, 0),
-                 leftBorder = c(1, 1, 4),
-                 topBorder = c(2, 1, 3),
-                 rightBorder = c(1, 2, 3)
-               )
-par(mfrow = c(2, 2), mar = rep(0.2, 4))
-TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "up")
-values <- TernaryDensity(coordinates, resolution = 3L)
-ColourTernary(values)
-TernaryPoints(coordinates, col = "red")
-text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
-
-TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "right")
-values <- TernaryDensity(coordinates, resolution = 3L)
-ColourTernary(values)
-TernaryPoints(coordinates, col = "red")
-text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
-
-TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "down")
-values <- TernaryDensity(coordinates, resolution = 3L)
-ColourTernary(values)
-TernaryPoints(coordinates, col = "red")
-text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
-
-TernaryPlot(grid.lines = 3, axis.labels = 1:3, point = "left")
-values <- TernaryDensity(coordinates, resolution = 3L)
-ColourTernary(values)
-TernaryPoints(coordinates, col = "red")
-text(values[1, ], values[2, ], paste(values[3, ], "/ 6"), cex = 0.8)
-
-TernaryDensityContour(t(vapply(coordinates, I, double(3L))),
-                      resolution = 24L, tolerance = -0.02, col = "orange")
-
-
-
 ## ----find-corners-------------------------------------------------------------
 # Define points corresponding to corners of a region to plot
 my_corners <- list(c(22, 66, 12), c(22, 72, 6), c(15, 80, 5), c(12, 76, 12))
@@ -273,7 +242,7 @@ my_corners <- list(c(22, 66, 12), c(22, 72, 6), c(15, 80, 5), c(12, 76, 12))
 # Print Cartesian coordinates of points
 vapply(my_corners, TernaryCoords, direction = 1, FUN.VALUE = c(x = 0, y = 0))
 
-## ----close-up, fig.asp = 1----------------------------------------------------
+## ----close-up, fig.asp = 1, fig.width = 3.5-----------------------------------
 # Remove plot margins
 par(mar = rep(0, 4))
 
@@ -298,11 +267,13 @@ text(0.33, 0.2, "ylim[2]", pos = 3)
 text(0.38, 0.1, "<padding>", pos = 4, cex = 0.75)
 text(0.38, 0.1, "<padding> ", pos = 2, cex = 0.75, srt = 90)
 
-## ----subregion-plot, fig.asp = 1----------------------------------------------
+## ----subregion-plot, fig.asp = 1, fig.width = 3.5-----------------------------
+par(mar = rep(0.2, 4))
 TernaryPlot(region = my_corners) # Fit plotted region to data
 TernaryPolygon(my_corners, col = "#2cbe4e88")
 
-## ----manual-subregion, fig.asp = 1--------------------------------------------
+## ----manual-subregion, fig.asp = 1, fig.width = 3.5---------------------------
+par(mar = rep(0.2, 4))
 region <- list(
    c(amin = 10, bmin = 70, cmin = 0),
    c(amax = 30, bmax = 70, cmax = 10)
