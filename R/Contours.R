@@ -12,7 +12,7 @@
 #' @param resolution The number of triangles whose base should lie on the longest 
 #' axis of the triangle.  Higher numbers will result in smaller subdivisions and smoother
 #' colour gradients, but at a computational cost.
-#' @template directionParam
+#' @inheritParams TernaryCoords
 #' @param \dots Additional parameters to `Func()`.
 #' @return `TernaryPointValues()` returns a matrix whose rows correspond to:
 #'
@@ -70,7 +70,7 @@ TernaryPointValues <- function(Func,
 #' tiled to cover a ternary plot.
 #'
 #' @inheritParams TernaryPointValues
-#' @template directionParam
+#' @inheritParams TernaryCoords
 #'
 #' @return `TriangleCentres()` returns a matrix with three named rows:
 #'  - `x` _x_ coordinates of triangle midpoints;
@@ -230,7 +230,7 @@ TriangleInHull <- function(triangles, coordinates, buffer) {
   triSize <- sqrt(sum((firstTris[, 2] - firstTris[, 1]) ^ 2)) / 2
   
   txy <- t(xy)
-  hull <- GrowPolygon(txy[chull(txy), ], buffer = triSize)
+  hull <- PlotTools::GrowPolygon(txy[chull(txy), ], buffer = triSize)
   
   # Return:
   list(inside = as.logical(point.in.polygon(triangles["x", ], triangles["y", ],
@@ -239,7 +239,7 @@ TriangleInHull <- function(triangles, coordinates, buffer) {
 }
 
 #' @rdname TernaryPointValues
-#' @template coordinatesParam
+#' @inheritParams CoordinatesToXY
 #' @export
 TernaryDensity <- function (coordinates,
                             resolution = 48L,
@@ -500,7 +500,10 @@ TernaryTiles <- function(x, y, down, resolution, col,
 #' @param spectrum Vector of colours to use as a spectrum, or `NULL` to use
 #' `values["z", ]`.
 #' @inheritParams TernaryPointValues
-#' @template legendParam
+#' @param legend Character vector specifying annotations for colour scale.
+#' If not provided, no colour legend is displayed.
+#' Specify `TRUE` to generate automatically, or a single integer to generate
+#' `legend` annotations.
 #' @param \dots Further arguments to
 #' [`SpectrumLegend()`][PlotTools::SpectrumLegend].
 #' @return `ColourTernary()` is called for its side effect – colouring a ternary
@@ -616,7 +619,7 @@ ColorTernary <- ColourTernary
 #' @inheritParams TernaryPlot
 #' @inheritParams TernaryPointValues
 #' @template dotsToContour
-#' @template legendParam
+#' @inheritParams ColourTernary
 #' @param legend... List of additional parameters to send to
 #' [`SpectrumLegend()`][PlotTools::SpectrumLegend].
 #' @param func... List of additional parameters to send to `Func()`.
@@ -688,7 +691,7 @@ ColorTernary <- ColourTernary
 #' par(originalPar)
 #' @family contour plotting functions
 #' @importFrom graphics contour .filled.contour
-#' @importFrom grDevices hcl.colors
+#' @importFrom grDevices hcl.colors xy.coords
 #' @importFrom PlotTools GrowPolygon SpectrumLegend
 #' @importFrom sp point.in.polygon
 #' @export
@@ -715,8 +718,8 @@ TernaryContour <- function(
   }
   
   if (is.null(within)) {
-    within <- GrowPolygon(t(TernaryToXY(.RegionCorners(region))),
-                          buffer = 1 / resolution)
+    within <- PlotTools::GrowPolygon(t(TernaryToXY(.RegionCorners(region))),
+                                     buffer = 1 / resolution)
   } else {
     within <- xy.coords(within)
   }
@@ -789,7 +792,7 @@ TernaryContour <- function(
 #' \href{https://github.com/ms609/Ternary/issues/new?title=Triangular+KDE}{Github issue}.
 #'
 #'
-#' @template coordinatesParam
+#' @inheritParams TernaryDensity
 #' @param bandwidth Vector of bandwidths for x and y directions.
 #' Defaults to normal reference bandwidth (see `MASS::bandwidth.nrd`).
 #' A scalar value will be taken to apply to both directions.
@@ -798,7 +801,7 @@ TernaryContour <- function(
 #' should be plotted, as a fraction of the size of the triangle.
 #' Negative values will cause contour lines to extend beyond the margins of the
 #' plot.
-#' @template directionParam
+#' @inheritParams TernaryCoords
 #' @template dotsToContour
 #' @param edgeCorrection Logical specifying whether to correct for edge effects
 #'  (see details).

@@ -269,7 +269,7 @@ TernaryPlot <- function(atip = NULL, btip = NULL, ctip = NULL,
 }
 
 #' @describeIn TernaryPlot Add `grid.lines` horizontal lines to the ternary plot
-#' @template directionParam
+#' @inheritParams TernaryCoords
 #'
 #' @importFrom graphics par
 #' @export
@@ -324,7 +324,7 @@ HorizontalGrid <- function(grid.lines = 10, grid.col = "grey",
 #'        \code{\link[graphics]{points}},
 #'        \code{\link[graphics]{lines}} or
 #'        \code{\link[graphics]{text}}.
-#' @template coordinatesParam
+#' @inheritParams CoordinatesToXY
 #' @param fromCoordinates,toCoordinates For `TernaryArrows()`, coordinates at
 #' which arrows should begin and end; _cf._ `x0`, `y0`, `x1` and `y1` in
 #' \link[graphics]{arrows}.  Recycled as necessary.
@@ -377,7 +377,9 @@ AddToTernary <- function(PlottingFunction, coordinates, ...) {
 #' Accepts various formats of input data; extracts ternary coordinates and
 #' converts to X and Y coordinates.
 #'
-#' @template coordinatesParam
+#' @param coordinates A list, matrix, data.frame or vector in which each
+#' element (or row) specifies the three coordinates of a point in ternary space.
+#' Each element (or row) will be rescaled such that its entries sum to 100.
 #'
 #' @return `CoordinatesToXY()` returns an array of two rows, corresponding to
 #' the X and Y coordinates of `coordinates`.

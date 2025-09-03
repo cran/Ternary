@@ -1,5 +1,5 @@
 library("methods", exclude = c("removeClass", "show"))
-suppressPackageStartupMessages(library("shiny", quietly = TRUE))
+library("shiny", quietly = TRUE)
 if (!requireNamespace("shinyjs", quietly = TRUE)) {
   install.packages("shinyjs")
   install.packages("colourpicker") # Necessarily absent, as imports shinyjs

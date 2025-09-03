@@ -16,7 +16,8 @@
 #' coordinates of points.
 #' @param b_coord The b coordinate, if \code{abc} is a single number.
 #' @param c_coord The c coordinate, if \code{abc} is a single number.
-#' @template directionParam
+#' @param direction (optional) Integer specifying the direction that the
+#'  current ternary plot should point: 1, up; 2, right; 3, down; 4, left.
 #' @inheritParams TernaryPlot
 #'
 #' @return `TernaryCoords()` returns a vector of length two that converts
@@ -120,7 +121,7 @@ TernaryToXY <- TernaryCoords
 #'
 #' @param x,y Numeric values giving the _x_ and _y_ coordinates of a point or
 #' points.
-#' @template directionParam
+#' @inheritParams TernaryCoords
 #' @inheritParams TernaryPlot
 #'
 #' @return `XYToTernary()` Returns the ternary point(s) corresponding to the
@@ -194,7 +195,7 @@ XYToPetPrec <- XYToHoldridge
 
 #' X and Y coordinates of ternary plotting area
 #'
-#' @template directionParam
+#' @inheritParams TernaryCoords
 #'
 #' @return `TernaryXRange()` and `TernaryYRange()` return the minimum and
 #' maximum X or Y coordinate of the area in which a ternary plot is drawn,
@@ -241,7 +242,7 @@ TernaryYRange <- function(direction = getOption("ternDirection", 1L)) {
 #' Evaluate whether a given set of coordinates lie outwith the boundaries of
 #' a plotted ternary diagram.
 #'
-#' @template xyParams
+#' @param x,y Vectors of _x_ and _y_ coordinates of points.
 #' @param tolerance Consider points this close to the edge of the plot to be
 #' inside.  Set to negative values to count points that are just outside the
 #' plot as inside, and to positive values to count points that are just inside
@@ -275,8 +276,8 @@ OutsidePlot <- function(x, y, tolerance = 0) {
 #' within a ternary plot with the value of its 'reflection' across the nearest
 #' axis or corner.
 #'
-#' @template xyParams
-#' @template directionParam
+#' @inheritParams OutsidePlot
+#' @inheritParams TernaryCoords
 #'
 #' @return `ReflectedEquivalents()` returns a list of the _x_, _y_ coordinates
 #' of the points produced if the given point is reflected across each of the
