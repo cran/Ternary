@@ -3,7 +3,7 @@
 [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#project-statuses)
 [![codecov](https://codecov.io/gh/ms609/Ternary/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ms609/Ternary)
 [![CRAN Status Badge](https://www.r-pkg.org/badges/version/Ternary)](https://cran.r-project.org/package=Ternary)
-[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/Ternary)](https://cran.r-project.org/package=Ternary)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/Ternary)](https://ms609.github.io/usage/#ternary)
 [![DOI](https://zenodo.org/badge/111806977.svg)](https://zenodo.org/badge/latestdoi/111806977)
 
 
@@ -15,13 +15,22 @@ using the familiar functions of the default 'graphics' package.
 ![Example ternary plot](https://user-images.githubusercontent.com/1695515/233467338-88a3b3a8-5580-4924-a11e-06dc8a38b3e9.png)
 
 
-For simple use cases, generate ternary plots using the point-and-click
-Shiny app:
+For simple use cases, generate ternary plots using the 
+[web app](https://ms609.github.io/Ternary/app/).
+
+The first use of the app may take a minute or two to load.
+
+
+You can also run the Shiny app through your local R installation:
 
 ```r
 install.packages("Ternary")
 Ternary::TernaryApp()
 ```
+
+
+
+
 
 For greater control over your plots, use the R command line;
 usage instructions are available for

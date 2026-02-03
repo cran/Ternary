@@ -1,5 +1,5 @@
 library("methods", exclude = c("removeClass", "show"))
-library("shiny", quietly = TRUE)
+suppressPackageStartupMessages(library("shiny", quietly = TRUE))
 if (!requireNamespace("shinyjs", quietly = TRUE)) {
   install.packages("shinyjs")
   install.packages("colourpicker") # Necessarily absent, as imports shinyjs
@@ -90,7 +90,9 @@ fontInput <- function (id, name, val) {
 
 
 # Define UI for app that draws a histogram ----
-ui <- fluidPage(title = "Ternary plotter", theme = "Ternary.css",
+ui <- fluidPage(
+  title = "Ternary plotter", theme = "Ternary.css",
+  titlePanel(title = NULL, windowTitle = "Ternary Plotter"),
   useShinyjs(),
                 
   sidebarLayout(
@@ -98,7 +100,8 @@ ui <- fluidPage(title = "Ternary plotter", theme = "Ternary.css",
       tabsetPanel(
         tabPanel("Load data",
            tags$div("Upload a csv or spreadsheet, where the first three columns",
-                    "list the co-ordinates of each point.  Columns 4 to 6 may",
+                    "list the co-ordinates of each point, and the first row",
+                    "names the columns. Columns 4 to 6 may",
                     "be used to specify the points' style."),
            fileInput("datafile", "Data", placeholder = "No data file selected",
                      accept = c(".csv", ".txt", ".xls", ".xlsx")),
