@@ -99,6 +99,18 @@ test_that("Coordination supports ranges", {
   )
 })
 
+test_that("Classed matrices supported", {
+  # ts supported by dedicated method
+  seats <- c("drivers", "front", "rear")
+  expect_equal(CoordinatesToXY(Seatbelts[, seats]),
+               CoordinatesToXY(as.matrix(Seatbelts[, seats])))
+  sb <- Seatbelts[, seats]
+  
+  # Non-natively supported class:
+  class(sb) <- c("zoo", "matrix", "array")
+  expect_equal(CoordinatesToXY(sb),
+               CoordinatesToXY(as.matrix(sb)))
+})
 
 test_that("Regions are supported both ways", {
   my_corners <- list(c(22, 66, 12), c(22, 72, 6), c(15, 80, 5), c(12, 76, 12))

@@ -3,6 +3,7 @@
 \name{TernaryCoords}
 \alias{TernaryCoords}
 \alias{TernaryToXY.matrix}
+\alias{TernaryToXY.ts}
 \alias{TernaryToXY.numeric}
 \alias{TernaryToXY}
 \title{Convert ternary coordinates to Cartesian space}
@@ -16,6 +17,14 @@ TernaryCoords(
 )
 
 \method{TernaryToXY}{matrix}(
+  abc,
+  b_coord = NULL,
+  c_coord = NULL,
+  direction = getOption("ternDirection", 1L),
+  region = getOption("ternRegion", ternRegionDefault)
+)
+
+\method{TernaryToXY}{ts}(
   abc,
   b_coord = NULL,
   c_coord = NULL,
@@ -87,10 +96,10 @@ TernaryToXY(coords)
 \item \code{\link[=TernaryPlot]{TernaryPlot()}}
 }
 
-Other coordinate translation functions: 
-\code{\link{ReflectedEquivalents}()},
-\code{\link{TriangleCentres}()},
-\code{\link{XYToTernary}()}
+Other coordinate translation functions:
+\code{\link[=ReflectedEquivalents]{ReflectedEquivalents()}},
+\code{\link[=TriangleCentres]{TriangleCentres()}},
+\code{\link[=XYToTernary]{XYToTernary()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
